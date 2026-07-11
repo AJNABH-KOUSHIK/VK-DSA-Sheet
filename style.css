@@ -3422,74 +3422,7 @@ body:not(.user-logged-in) .problem input[type="checkbox"]:hover {
     }
 }
 
-/* ============================================
-   MOBILE TOP BAR - COMPLETELY OPAQUE (Blocks scroll content)
-   ============================================ */
 
-@media (max-width: 768px) {
-    
-    /* SOLID OPAQUE BAR - blocks everything behind it */
-    body::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        width: 100%;
-        height: 70px;
-        background: #0a0a1e;  /* Solid opaque - no transparency */
-        z-index: 9998;         /* Very high - covers everything */
-        pointer-events: none;
-        border-bottom: 1px solid rgba(139, 92, 246, 0.2);
-    }
-
-    /* Hamburger button - ABOVE the bar */
-    .mobile-menu-btn {
-        position: fixed !important;
-        top: 15px !important;
-        left: 15px !important;
-        z-index: 9999 !important;  /* Higher than bar */
-        display: block !important;
-        background: rgba(139, 92, 246, 0.25) !important;
-        border: 1px solid rgba(139, 92, 246, 0.5) !important;
-        color: white !important;
-        padding: 8px 12px !important;
-        border-radius: 10px !important;
-        font-size: 20px !important;
-        cursor: pointer;
-    }
-
-    /* Buttons row - ABOVE the bar */
-    .profile-buttons-row {
-        position: fixed !important;
-        top: 12px !important;
-        right: 12px !important;
-        left: auto !important;
-        z-index: 9999 !important;  /* Higher than bar */
-        display: flex !important;
-        flex-direction: row !important;
-        align-items: center !important;
-        gap: 8px !important;
-        margin: 0 !important;
-        width: auto !important;
-        background: transparent !important;
-    }
-
-    /* Push page content DOWN below the fixed bar */
-    .main {
-        padding-top: 85px !important;
-    }
-}
-
-@media (max-width: 480px) {
-    body::before {
-        height: 65px;
-    }
-
-    .main {
-        padding-top: 80px !important;
-    }
-}
 /* ============================================
    MOBILE - MAKE TOP BAR BUTTONS FULLY VISIBLE
    ============================================ */
@@ -3588,15 +3521,162 @@ body:not(.user-logged-in) .problem input[type="checkbox"]:hover {
         height: 34px !important;
     }
 }
+/* ============================================
+   MOBILE TOP BAR - FIXED WITHOUT BREAKING STARS
+   ============================================ */
+
 @media (max-width: 768px) {
-    body::before {
-        opacity: 1 !important;
-        background: #0a0a1e !important;
+    
+    /* Create top bar using main::before (not body::before!) */
+    .main::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 70px;
+        background: #05010f;  /* Match your body bg color */
+        z-index: 9997;
+        pointer-events: none;
+        border-bottom: 1px solid rgba(139, 92, 246, 0.15);
     }
 
-    .profile-buttons-row button,
-    .profile-buttons-row .user-profile {
-        filter: none !important;
+    /* Hamburger button - ABOVE everything */
+    .mobile-menu-btn {
+        position: fixed !important;
+        top: 15px !important;
+        left: 15px !important;
+        z-index: 10000 !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        background: rgba(139, 92, 246, 0.25) !important;
+        border: 1px solid rgba(139, 92, 246, 0.5) !important;
+        color: white !important;
+        padding: 8px 12px !important;
+        border-radius: 10px !important;
+        font-size: 20px !important;
+        cursor: pointer;
+        width: 42px;
+        height: 42px;
+    }
+
+    /* Buttons row - ABOVE the bar */
+    .profile-buttons-row {
+        position: fixed !important;
+        top: 12px !important;
+        right: 12px !important;
+        left: auto !important;
+        z-index: 10000 !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 8px !important;
+        margin: 0 !important;
+        width: auto !important;
+        background: transparent !important;
+        padding: 0 !important;
+    }
+
+    .buttons-group {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 6px !important;
+        align-items: center !important;
+    }
+
+    /* All buttons - bold visible style */
+    #historyBtn {
+        position: static !important;
+        background: rgba(139, 92, 246, 0.2) !important;
+        border: 1px solid rgba(139, 92, 246, 0.5) !important;
+        color: #fbbf24 !important;
         opacity: 1 !important;
+        padding: 8px 14px !important;
+        font-size: 12px !important;
+        font-weight: 700 !important;
+        border-radius: 20px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+        width: auto !important;
+        height: auto !important;
+        z-index: 10000 !important;
+    }
+
+    #logoutBtn {
+        position: static !important;
+        background: rgba(239, 68, 68, 0.2) !important;
+        border: 1px solid rgba(239, 68, 68, 0.5) !important;
+        color: #ff6b6b !important;
+        opacity: 1 !important;
+        padding: 8px 14px !important;
+        font-size: 12px !important;
+        font-weight: 700 !important;
+        border-radius: 20px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+        width: auto !important;
+        height: auto !important;
+        z-index: 10000 !important;
+    }
+
+    #loginBtn {
+        position: static !important;
+        background: rgba(139, 92, 246, 0.25) !important;
+        border: 1px solid rgba(139, 92, 246, 0.5) !important;
+        color: #ffffff !important;
+        opacity: 1 !important;
+        padding: 8px 14px !important;
+        font-size: 12px !important;
+        font-weight: 700 !important;
+        border-radius: 20px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+        width: auto !important;
+        height: auto !important;
+        z-index: 10000 !important;
+    }
+
+    .user-profile,
+    #userInfo {
+        position: static !important;
+        opacity: 1 !important;
+        z-index: 10000 !important;
+        width: auto !important;
+        height: auto !important;
+    }
+
+    .profile-picture {
+        width: 38px !important;
+        height: 38px !important;
+        border: 2px solid rgba(139, 92, 246, 0.6) !important;
+        box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4) !important;
+        opacity: 1 !important;
+    }
+
+    /* Push page content DOWN below the fixed bar */
+    .main {
+        padding-top: 80px !important;
+        position: relative;
+    }
+}
+
+@media (max-width: 480px) {
+    .main::before {
+        height: 65px;
+    }
+
+    .main {
+        padding-top: 75px !important;
+    }
+
+    #historyBtn,
+    #logoutBtn,
+    #loginBtn {
+        padding: 7px 12px !important;
+        font-size: 11px !important;
+    }
+
+    .profile-picture {
+        width: 34px !important;
+        height: 34px !important;
     }
 }
