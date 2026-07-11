@@ -4359,47 +4359,54 @@ body:not(.user-logged-in) .problem input[type="checkbox"]:hover {
 }
 
 /* ============================================
-   CENTER HERO HEADING
+   PROPERLY CENTER HERO HEADING (DESKTOP)
    ============================================ */
 
-.left-top {
-    text-align: center !important;
-    width: 100% !important;
-}
-
-.hero-title {
-    text-align: center !important;
-}
-
-.hero-subtitle {
-    text-align: center !important;
-}
-
-/* Center the tagline words too */
-.hero-tagline {
-    text-align: center !important;
-    display: block !important;
-}
-
-/* Make top header center everything */
-.top-header {
-    align-items: center !important;
-}
-
-/* On desktop keep stats card on right, but title centered */
 @media (min-width: 769px) {
+    
+    /* Remove reserved right space from main - center everything */
     .top-header {
+        display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
+        justify-content: center !important;
         text-align: center !important;
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        /* Compensate for progressContainer being on right (145px = half of 290px padding) */
+        transform: translateX(-125px);
     }
 
     .left-top {
-        max-width: 800px !important;
+        text-align: center !important;
+        width: auto !important;
+        max-width: 700px !important;
         margin: 0 auto !important;
+        display: block !important;
     }
 
+    .hero-title {
+        text-align: center !important;
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .hero-tagline {
+        text-align: center !important;
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .hero-subtitle {
+        text-align: center !important;
+        display: block !important;
+        width: 100% !important;
+    }
+
+    /* Reset stats card position */
     .stats-card {
-        margin-top: 20px !important;
+        margin: 20px auto 0 auto !important;
+        transform: translateX(0) !important;
     }
 }
