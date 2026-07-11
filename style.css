@@ -3588,3 +3588,15 @@ body:not(.user-logged-in) .problem input[type="checkbox"]:hover {
         height: 34px !important;
     }
 }
+@media (max-width: 768px) {
+    body::before {
+        opacity: 1 !important;
+        background: #0a0a1e !important;
+    }
+
+    .profile-buttons-row button,
+    .profile-buttons-row .user-profile {
+        filter: none !important;
+        opacity: 1 !important;
+    }
+}
