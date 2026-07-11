@@ -107,6 +107,7 @@ if (signupForm) {
             localStorage.setItem('userJoinDate', new Date().toISOString()); // 🆕 ADD THIS
             showToast('Your account is ready to use!', 'success', 'Account Created');
             modal.style.display = 'none';
+            document.body.classList.remove('login-modal-open'); // 🆕 ADD THIS LINE
         } catch (err) {
             showToast(getFriendlyError(err), 'error', 'Signup Failed');
         }
@@ -136,6 +137,7 @@ if (loginForm) {
             await window.firebaseSignIn(window.firebaseAuth, email, password);
             showToast('Welcome back! 🎉', 'success', 'Logged In');
             modal.style.display = 'none';
+            document.body.classList.remove('login-modal-open'); // 🆕 ADD THIS LINE
         } catch (err) {
             showToast(getFriendlyError(err), 'error', 'Login Failed');
         }
@@ -170,6 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         showToast('Signed in with Google', 'success', 'Welcome!');
         modal.style.display = 'none';
+        document.body.classList.remove('login-modal-open'); // 🆕 ADD THIS LINE
     } catch (err) {
         showToast(getFriendlyError(err), 'error', 'Sign-in Failed');
     }
@@ -1361,9 +1364,15 @@ function updateProfileUI(user) {
     }
 
     // 🆕 ADD THIS - Refresh calendar based on login state
-    if (typeof loadCalendar === 'function') {
-        loadCalendar();
-    }
+   // 🆕 ADD THIS - Refresh calendar based on login state
+if (typeof loadCalendar === 'function') {
+    loadCalendar();
+}
+
+// 🆕 SAFETY NET: Remove any stuck modal classes when auth state changes
+document.body.classList.remove('login-modal-open');
+document.body.classList.remove('profile-modal-open');
+document.body.classList.remove('history-modal-open');
 }
 // ============ PROFILE MODAL ============
 // ============ PROFILE MODAL ============
