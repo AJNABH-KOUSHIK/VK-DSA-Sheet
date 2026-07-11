@@ -28,7 +28,7 @@ Every coding platform promotes **its own** problem set:
 | **GeeksforGeeks** | Topic-wise problems | No unified progress tracking across platforms |
 | **Codeforces** | Competitive problems | No structured DSA sheet |
 
-### The Real Issue
+## The Real Issue
 
 - ❌ Students jump between 4-5 platforms with **no single place** to track everything
 - ❌ Sheets exist, but they're just **lists** — no pattern-based learning
