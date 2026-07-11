@@ -3421,3 +3421,92 @@ body:not(.user-logged-in) .problem input[type="checkbox"]:hover {
         justify-content: flex-start;
     }
 }
+
+/* ============================================
+   MOBILE TOP BAR - FIX OVERLAP ISSUE
+   ============================================ */
+
+@media (max-width: 768px) {
+    
+    /* Create a proper backdrop for the top bar area */
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 65px;
+        background: linear-gradient(
+            180deg,
+            rgba(15, 12, 41, 0.95) 0%,
+            rgba(15, 12, 41, 0.85) 60%,
+            rgba(15, 12, 41, 0) 100%
+        );
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        z-index: 998;
+        pointer-events: none;
+    }
+
+    /* Ensure hamburger stays on top of the backdrop */
+    .mobile-menu-btn {
+        position: fixed !important;
+        top: 12px !important;
+        left: 15px !important;
+        z-index: 1000 !important;
+        display: block !important;
+        background: rgba(139, 92, 246, 0.2) !important;
+        border: 1px solid rgba(139, 92, 246, 0.4) !important;
+        color: white !important;
+        padding: 8px 12px !important;
+        border-radius: 10px !important;
+        font-size: 20px !important;
+        cursor: pointer;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Top-right buttons row with backdrop */
+    .profile-buttons-row {
+        position: fixed !important;
+        top: 10px !important;
+        right: 12px !important;
+        left: auto !important;
+        z-index: 999 !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 8px !important;
+        margin: 0 !important;
+        width: auto !important;
+        background: transparent !important;
+        padding: 4px 6px !important;
+        border-radius: 30px !important;
+    }
+
+    /* Add spacing to top of main content so it doesn't hide under bar */
+    .main {
+        padding-top: 75px !important;
+    }
+
+    /* Hide title when scrolling behind the bar */
+    .top-header,
+    .left-top,
+    .hero-title,
+    .hero-subtitle {
+        position: relative;
+        z-index: 1;
+    }
+}
+
+/* Even smaller screens */
+@media (max-width: 480px) {
+    body::before {
+        height: 60px;
+    }
+
+    .main {
+        padding-top: 70px !important;
+    }
+}
