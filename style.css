@@ -2878,3 +2878,24 @@ body:not(.user-logged-in) .problem input[type="checkbox"]:hover {
         font-size: 18px !important;
     }
 }
+@media (max-width: 768px) {
+    
+    /* Add gap between "Master patterns..." subtitle and Total Solved box */
+    .hero-subtitle {
+        margin-bottom: 25px !important;
+    }
+
+    .stats-card {
+        margin-top: 15px !important;
+    }
+
+    /* Add gap between stats card and calendar/circle */
+    #progressContainer {
+        margin-top: 25px !important;
+    }
+
+    /* Add gap between calendar/circle and tabs */
+    .tabs {
+        margin-top: 25px !important;
+    }
+}
