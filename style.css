@@ -4127,3 +4127,100 @@ body:not(.user-logged-in) .problem input[type="checkbox"]:hover {
         height: 8px;
     }
 }
+
+/* ============================================
+   CALENDAR LOGIN PROMPT (When Logged Out)
+   ============================================ */
+
+.calendar-login-prompt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 25px 15px;
+    text-align: center;
+    grid-column: 1 / -1;  /* Span all 7 columns */
+    gap: 12px;
+    animation: fadeInPrompt 0.4s ease;
+}
+
+.login-lock-icon {
+    font-size: 40px;
+    margin-bottom: 5px;
+    animation: lockBounce 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 12px rgba(168, 85, 247, 0.5));
+}
+
+.login-prompt-text {
+    color: #cbd5e1;
+    font-size: 13px;
+    font-weight: 500;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.login-prompt-btn {
+    background: linear-gradient(135deg, #a855f7, #6366f1);
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
+    letter-spacing: 0.5px;
+    margin-top: 5px;
+}
+
+.login-prompt-btn:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 20px rgba(168, 85, 247, 0.5);
+    background: linear-gradient(135deg, #c084fc, #818cf8);
+}
+
+.login-prompt-btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+@keyframes lockBounce {
+    0%, 100% { 
+        transform: translateY(0) rotate(0deg); 
+    }
+    50% { 
+        transform: translateY(-5px) rotate(-5deg); 
+    }
+}
+
+@keyframes fadeInPrompt {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .calendar-login-prompt {
+        padding: 20px 10px;
+        gap: 10px;
+    }
+
+    .login-lock-icon {
+        font-size: 34px;
+    }
+
+    .login-prompt-text {
+        font-size: 12px;
+    }
+
+    .login-prompt-btn {
+        padding: 7px 16px;
+        font-size: 11px;
+    }
+}
