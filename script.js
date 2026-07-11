@@ -932,10 +932,13 @@ function openHistory() {
     const modal = document.getElementById('historyModal');
     if (!modal) return;
 
-    // Load history data from localStorage
+    // 🆕 HIDE top bar buttons when modal opens
+    document.body.classList.add('history-modal-open');
+
+    // ... rest of your existing openHistory code ...
+    
     const history = JSON.parse(localStorage.getItem("practiceHistory")) || [];
 
-    // Update stats
     let easyCount = 0, medCount = 0, hardCount = 0;
     history.forEach(item => {
         const diff = (item.difficulty || '').toLowerCase();
@@ -954,7 +957,6 @@ function openHistory() {
     if (histMedium) histMedium.textContent = medCount;
     if (histHard) histHard.textContent = hardCount;
 
-    // Generate rows
     const tbody = document.getElementById('historyTableBody');
     if (!tbody) return;
     tbody.innerHTML = '';
@@ -986,11 +988,9 @@ function openHistory() {
         });
     }
 
-    // Show modal
     modal.classList.add('active');
     modal.style.display = 'flex';
 
-    // Start auto-refresh for "X seconds ago" updates
     if (historyInterval) clearInterval(historyInterval);
     historyInterval = setInterval(() => {
         if (modal.style.display === 'flex') {
@@ -1008,6 +1008,10 @@ window.openHistory = openHistory;
 function closeHistory() {
     const modal = document.getElementById('historyModal');
     if (!modal) return;
+    
+    // 🆕 SHOW top bar buttons again when modal closes
+    document.body.classList.remove('history-modal-open');
+    
     modal.classList.remove('active');
     modal.style.display = 'none';
     if (historyInterval) clearInterval(historyInterval);
