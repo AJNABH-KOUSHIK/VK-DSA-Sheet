@@ -3423,12 +3423,12 @@ body:not(.user-logged-in) .problem input[type="checkbox"]:hover {
 }
 
 /* ============================================
-   MOBILE TOP BAR - FIX OVERLAP ISSUE
+   MOBILE TOP BAR - SOLID BACKGROUND (No Blur)
    ============================================ */
 
 @media (max-width: 768px) {
     
-    /* Create a proper backdrop for the top bar area */
+    /* Solid dark background for top bar area */
     body::before {
         content: '';
         position: fixed;
@@ -3436,19 +3436,13 @@ body:not(.user-logged-in) .problem input[type="checkbox"]:hover {
         left: 0;
         right: 0;
         height: 65px;
-        background: linear-gradient(
-            180deg,
-            rgba(15, 12, 41, 0.95) 0%,
-            rgba(15, 12, 41, 0.85) 60%,
-            rgba(15, 12, 41, 0) 100%
-        );
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
+        background: #0f0c29;  /* Same as your page background */
         z-index: 998;
         pointer-events: none;
+        border-bottom: 1px solid rgba(139, 92, 246, 0.15);
     }
 
-    /* Ensure hamburger stays on top of the backdrop */
+    /* Hamburger button */
     .mobile-menu-btn {
         position: fixed !important;
         top: 12px !important;
@@ -3462,12 +3456,10 @@ body:not(.user-logged-in) .problem input[type="checkbox"]:hover {
         border-radius: 10px !important;
         font-size: 20px !important;
         cursor: pointer;
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
-    /* Top-right buttons row with backdrop */
+    /* Top-right buttons row */
     .profile-buttons-row {
         position: fixed !important;
         top: 10px !important;
@@ -3485,28 +3477,18 @@ body:not(.user-logged-in) .problem input[type="checkbox"]:hover {
         border-radius: 30px !important;
     }
 
-    /* Add spacing to top of main content so it doesn't hide under bar */
+    /* Push all main content DOWN so it doesn't hide under the top bar */
     .main {
-        padding-top: 75px !important;
-    }
-
-    /* Hide title when scrolling behind the bar */
-    .top-header,
-    .left-top,
-    .hero-title,
-    .hero-subtitle {
-        position: relative;
-        z-index: 1;
+        padding-top: 80px !important;
     }
 }
 
-/* Even smaller screens */
 @media (max-width: 480px) {
     body::before {
         height: 60px;
     }
 
     .main {
-        padding-top: 70px !important;
+        padding-top: 75px !important;
     }
 }
