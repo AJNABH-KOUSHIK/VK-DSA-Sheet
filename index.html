@@ -198,26 +198,40 @@
 <div id="progressContainer">
 
     <!-- Calendar -->
-    <div id="calendarBox">
+ <!-- Calendar with Navigation -->
+<div id="calendarBox">
 
-        <div class="calendar-header">
-            <span id="monthYear"></span>
-        </div>
-
-        <div class="weekdays">
-            <span>S</span>
-            <span>M</span>
-            <span>T</span>
-            <span>W</span>
-            <span>T</span>
-            <span>F</span>
-            <span>S</span>
-        </div>
-
-        <div id="calendarDays"></div>
-
+    <div class="calendar-header">
+        <button class="cal-nav-btn" id="prevMonthBtn" onclick="changeMonth(-1)">‹</button>
+        <span id="monthYear"></span>
+        <button class="cal-nav-btn" id="nextMonthBtn" onclick="changeMonth(1)">›</button>
     </div>
 
+    <div class="weekdays">
+        <span>S</span>
+        <span>M</span>
+        <span>T</span>
+        <span>W</span>
+        <span>T</span>
+        <span>F</span>
+        <span>S</span>
+    </div>
+
+    <div id="calendarDays"></div>
+
+    <!-- Legend -->
+    <div class="calendar-legend">
+        <div class="legend-item">
+            <span class="legend-dot done-dot"></span>
+            <span>Practiced</span>
+        </div>
+        <div class="legend-item">
+            <span class="legend-dot today-dot"></span>
+            <span>Today</span>
+        </div>
+    </div>
+
+</div>
 
     <!-- Progress Circle -->
     <div class="progress-circle" id="progressText">
