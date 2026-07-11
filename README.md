@@ -225,27 +225,22 @@ Here's how the entire application works from the user's perspective:
 ### 🏠 Home — Dashboard View
 > Pattern categories, total solved counter, difficulty breakdown, and calendar — all at a glance.
 
-<img src="https://github.com/user-attachments/assets/YOUR_DASHBOARD_SCREENSHOT" alt="Dashboard" width="90%" />
+<img src="https://github.com/user-attachments/assets/image.png" alt="Dashboard" width="90%" />
 
 ### 📋 Pattern View — Sub-patterns with Progress
 > Each pattern category expands into sub-patterns with individual progress tracking.
 
-<img src="https://github.com/user-attachments/assets/YOUR_PATTERN_SCREENSHOT" alt="Pattern View" width="90%" />
-
-### 📅 Calendar — Practice Streak
-> Visualize your daily coding activity and maintain consistency.
-
-<img src="https://github.com/user-attachments/assets/YOUR_CALENDAR_SCREENSHOT" alt="Calendar" width="90%" />
+<img src="https://github.com/user-attachments/assets/image2.png" alt="Pattern View" width="90%" />
 
 ### 📚 Books & Resources
 > Store recommended books and save your own favorites.
 
-<img src="https://github.com/user-attachments/assets/YOUR_BOOKS_SCREENSHOT" alt="Books" width="90%" />
+<img src="https://github.com/user-attachments/assets/image3.png" alt="Books" width="90%" />
 
 ### 🔗 Links & 📝 Notes
 > Your personal knowledge vault — save important links and write notes.
 
-<img src="https://github.com/user-attachments/assets/YOUR_LINKS_NOTES_SCREENSHOT" alt="Links and Notes" width="90%" />
+<img src="https://github.com/user-attachments/assets/image4.png" alt="Links and Notes" width="90%" />
 
 ---
 
