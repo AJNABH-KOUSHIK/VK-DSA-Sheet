@@ -95,6 +95,7 @@ if (signupForm) {
                     name: name,
                     email: email,
                     phone: phone,
+                    joinDate: new Date().toISOString(), // 🆕 ADD THIS
                     checkboxes: {},
                     notes: [],
                     links: [],
@@ -103,6 +104,7 @@ if (signupForm) {
                     practiceHistory: []
                 }
             );
+            localStorage.setItem('userJoinDate', new Date().toISOString()); // 🆕 ADD THIS
             showToast('Your account is ready to use!', 'success', 'Account Created');
             modal.style.display = 'none';
         } catch (err) {
@@ -156,6 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 name: result.user.displayName || "User",
                 email: result.user.email,
                 phone: result.user.phoneNumber || "Not Provided",
+                 joinDate: new Date().toISOString(), // 🆕 ADD THIS
                 checkboxes: {},
                 notes: [],
                 links: [],
@@ -163,6 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 doneDates: [],
                 practiceHistory: []
             });
+            localStorage.setItem('userJoinDate', new Date().toISOString()); // 🆕 ADD THIS
         }
         showToast('Signed in with Google', 'success', 'Welcome!');
         modal.style.display = 'none';
@@ -250,6 +254,17 @@ async function loadFromFirebase(uid) {
         if (userDoc.exists()) {
             const data = userDoc.data();
 
+            // 🆕 Store join date
+            if (data.joinDate) {
+                localStorage.setItem('userJoinDate', data.joinDate);
+            } else {
+                // For existing users without joinDate, set it now
+                const fallbackDate = new Date().toISOString();
+                localStorage.setItem('userJoinDate', fallbackDate);
+                await window.firebaseSetDoc(userDocRef, { joinDate: fallbackDate }, { merge: true });
+            }
+
+            // ... rest of your existing code
             localStorage.setItem('checkboxes', JSON.stringify(data.checkboxes || {}));
             localStorage.setItem('notes', JSON.stringify(data.notes || []));
             localStorage.setItem('links', JSON.stringify(data.links || []));
@@ -257,20 +272,7 @@ async function loadFromFirebase(uid) {
             localStorage.setItem('doneDates', JSON.stringify(data.doneDates || []));
             localStorage.setItem('practiceHistory', JSON.stringify(data.practiceHistory || []));
 
-            window.currentUserProfileData = {
-                name: data.name || window.currentUser.displayName || "User",
-                phone: data.phone || window.currentUser.phoneNumber || "Not Provided"
-            };
-
-            loadCheckboxesAndProgress();
-            attachStaticCheckboxListeners();
-            loadHistory();
-            loadCalendar();
-            updateGlobalProgress();
-            updateTotalSolvedStats();
-            loadNotesLinksBooks();  // 👈 ADD THIS LINE — renders user's saved items
-
-            console.log("✅ Data loaded from Firebase");
+            // ... rest of existing code
         }
     } catch (err) {
         console.error("Error loading data:", err);
@@ -1112,47 +1114,175 @@ function attachStaticCheckboxListeners() {
 }
 
 // ============ CALENDAR ============
+// ============ CALENDAR WITH FULL HISTORY ============
+let currentCalendarMonth = new Date().getMonth();
+let currentCalendarYear = new Date().getFullYear();
+
 function loadCalendar() {
     const monthYear = document.getElementById("monthYear");
     const calendarDays = document.getElementById("calendarDays");
+    const prevBtn = document.getElementById("prevMonthBtn");
+    const nextBtn = document.getElementById("nextMonthBtn");
     if (!monthYear || !calendarDays) return;
 
-    const now = new Date();
+    const year = currentCalendarYear;
+    const month = currentCalendarMonth;
+    const firstDay = new Date(year, month, 1).getDay();
+    const totalDays = new Date(year, month + 1, 0).getDate();
 
-    let year = now.getFullYear();
-    let month = now.getMonth();
-    let firstDay = new Date(year, month, 1).getDay();
-    let totalDays = new Date(year, month + 1, 0).getDate();
+    // Get user join date (from Firebase or fallback to current month)
+    const joinDate = getUserJoinDate();
+    const joinYear = joinDate.getFullYear();
+    const joinMonth = joinDate.getMonth();
 
-    monthYear.innerText = now.toLocaleString('default', { month: 'long', year: 'numeric' });
-    calendarDays.innerHTML = "";
+    // Get today
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const currentMonth = today.getMonth();
 
-    let saved = JSON.parse(localStorage.getItem("doneDates")) || [];
-
-    for (let i = 0; i < firstDay; i++) {
-        calendarDays.innerHTML += "<div></div>";
+    // Disable/enable navigation buttons
+    if (prevBtn) {
+        // Can't go before user's join month
+        if (year === joinYear && month <= joinMonth) {
+            prevBtn.disabled = true;
+            prevBtn.classList.add('disabled');
+        } else {
+            prevBtn.disabled = false;
+            prevBtn.classList.remove('disabled');
+        }
     }
 
+    if (nextBtn) {
+        // Can't go after current month
+        if (year === currentYear && month >= currentMonth) {
+            nextBtn.disabled = true;
+            nextBtn.classList.add('disabled');
+        } else {
+            nextBtn.disabled = false;
+            nextBtn.classList.remove('disabled');
+        }
+    }
+
+    // Set month/year title
+    const displayDate = new Date(year, month, 1);
+    monthYear.innerText = displayDate.toLocaleString('default', { 
+        month: 'long', 
+        year: 'numeric' 
+    });
+
+    // Clear previous days
+    calendarDays.innerHTML = "";
+
+    // Get all practice dates
+    const saved = JSON.parse(localStorage.getItem("doneDates")) || [];
+
+    // Add empty cells for days before month starts
+    for (let i = 0; i < firstDay; i++) {
+        const emptyDiv = document.createElement("div");
+        emptyDiv.classList.add("empty-day");
+        calendarDays.appendChild(emptyDiv);
+    }
+
+    // Add all days of the month
     for (let day = 1; day <= totalDays; day++) {
-        let div = document.createElement("div");
+        const div = document.createElement("div");
         div.classList.add("day");
         div.innerText = day;
 
-        let today = new Date();
-        if (day === today.getDate() && month === today.getMonth()) {
+        // Mark today
+        if (day === today.getDate() && 
+            month === today.getMonth() && 
+            year === today.getFullYear()) {
             div.classList.add("today");
         }
 
-        let dateString = `${year}-${month + 1}-${day}`;
+        // Mark practiced days
+        const dateString = `${year}-${month + 1}-${day}`;
         if (saved.includes(dateString)) {
             div.classList.add("done");
             div.innerHTML = `${day}<span class="tick">✓</span>`;
         }
+
+        // Mark future dates (dimmed)
+        const dayDate = new Date(year, month, day);
+        if (dayDate > today) {
+            div.classList.add("future");
+        }
+
+        // Mark before join date (dimmed)
+        const joinDateOnly = new Date(joinYear, joinMonth, joinDate.getDate());
+        if (dayDate < joinDateOnly) {
+            div.classList.add("before-join");
+        }
+
         calendarDays.appendChild(div);
     }
 }
 
-loadCalendar();
+// Navigate months
+function changeMonth(direction) {
+    const joinDate = getUserJoinDate();
+    const today = new Date();
+
+    // Calculate new month/year
+    let newMonth = currentCalendarMonth + direction;
+    let newYear = currentCalendarYear;
+
+    if (newMonth < 0) {
+        newMonth = 11;
+        newYear--;
+    } else if (newMonth > 11) {
+        newMonth = 0;
+        newYear++;
+    }
+
+    // Don't go before join date
+    if (newYear < joinDate.getFullYear() || 
+        (newYear === joinDate.getFullYear() && newMonth < joinDate.getMonth())) {
+        showToast('This is your first month on VK DSA! 🎉', 'info', 'Journey Start');
+        return;
+    }
+
+    // Don't go after current month
+    if (newYear > today.getFullYear() || 
+        (newYear === today.getFullYear() && newMonth > today.getMonth())) {
+        showToast('Cannot view future months', 'info', 'Time Travel Not Allowed 😅');
+        return;
+    }
+
+    currentCalendarMonth = newMonth;
+    currentCalendarYear = newYear;
+    loadCalendar();
+}
+window.changeMonth = changeMonth;
+
+// Get user join date from Firebase or fallback
+function getUserJoinDate() {
+    // Try to get from stored user metadata
+    if (window.currentUser && window.currentUser.metadata && window.currentUser.metadata.creationTime) {
+        return new Date(window.currentUser.metadata.creationTime);
+    }
+
+    // Fallback: check localStorage
+    const storedJoin = localStorage.getItem('userJoinDate');
+    if (storedJoin) {
+        return new Date(storedJoin);
+    }
+
+    // Ultimate fallback: use earliest practice date OR current date
+    const doneDates = JSON.parse(localStorage.getItem("doneDates")) || [];
+    if (doneDates.length > 0) {
+        const sortedDates = doneDates
+            .map(d => {
+                const parts = d.split('-');
+                return new Date(parts[0], parts[1] - 1, parts[2]);
+            })
+            .sort((a, b) => a - b);
+        return sortedDates[0];
+    }
+
+    return new Date();
+}
 
 // ============ SIDEBAR ACTIVE MENU SWITCH ============
 document.querySelectorAll('.menu-item').forEach(item => {
