@@ -144,65 +144,47 @@ But as a student, I wanted **ONE place** where I could:
 
 Here's how the entire application works from the user's perspective:
 
-<pre>
-┌─────────────────────────────────────────────────────────────┐
-│                     🌐 USER FLOW                            │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   User Visits Website                                       │
-│         │                                                   │
-│         ▼                                                   │
-│   Browse DSA Patterns (No login required)                   │
-│         │                                                   │
-│         ▼                                                   │
-│   Login / Sign Up  ──►  Firebase Authentication             │
-│         │                                                   │
-│         ▼                                                   │
-│   ┌─────────────────────────────────────────┐               │
-│   │            📊 DASHBOARD                 │               │
-│   │                                         │               │
-│   │  ┌──────────┐  ┌──────────┐  ┌───────┐ │               │
-│   │  │  Total   │  │Difficulty│  │Calendar│ │               │
-│   │  │  Solved  │  │Breakdown │  │  View  │ │               │
-│   │  │  0/450   │  │E / M / H │  │        │ │               │
-│   │  └──────────┘  └──────────┘  └───────┘ │               │
-│   │                                         │               │
-│   │  ┌─────────────────────────────────────┐│               │
-│   │  │     16 PATTERN CATEGORIES           ││               │
-│   │  │  Arrays │ Binary Search │ Strings   ││               │
-│   │  │  Bit Manipulation │ Linked List     ││               │
-│   │  │  Two Pointers │ Sliding Window      ││               │
-│   │  │  Stacks Queues │ Greedy │ Heaps     ││               │
-│   │  │  Binary Trees │ BST │ Graphs        ││               │
-│   │  │  Tries │ DP │ ...more               ││               │
-│   │  └─────────────────────────────────────┘│               │
-│   │                                         │               │
-│   │  Each Pattern ──► Sub-patterns          │               │
-│   │  Each Sub-pattern ──► Questions from:   │               │
-│   │     • LeetCode  • GFG  • TUF  • CF      │               │
-│   │                                         │               │
-│   │  ✅ Mark Complete  🔄 Mark for Revision │               │
-│   │                                         │               │
-│   └─────────────────────────────────────────┘               │
-│         │                                                   │
-│         ▼                                                   │
-│   Progress Synced to Firebase (Real-time)                   │
-│                                                             │
-│   ┌─────────── SIDEBAR ──────────┐                          │
-│   │  🔍 Search                   │                          │
-│   │  📖 Books (Recommended +     │                          │
-│   │       User's Favourites)     │                          │
-│   │  🔗 Links (User saved)       │                          │
-│   │  📝 Notes (User notes)       │                          │
-│   │                              │                          │
-│   │  ── Platform Quick Links ──  │                          │
-│   │  LC │ TUF │ GFG │ CF         │                          │
-│   └──────────────────────────────┘                          │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-</pre>
+```mermaid
+flowchart TD
+    A([🌐 User Visits Website]) --> B[Browse DSA Patterns<br/>No login required]
+    B --> C{Login / Sign Up?}
+    C -->|Yes| D[🔐 Firebase Authentication]
+    C -->|No| B
+    D --> E[📊 DASHBOARD]
+    
+    E --> F[Total Solved<br/>0/450]
+    E --> G[Difficulty Breakdown<br/>Easy / Medium / Hard]
+    E --> H[📅 Calendar View<br/>Practice Streak]
+    E --> I[16 Pattern Categories]
+    
+    I --> J[Arrays • Binary Search • Strings<br/>Bit Manipulation • Linked List<br/>Two Pointers • Sliding Window<br/>Stacks Queues • Greedy • Heaps<br/>Binary Trees • BST • Graphs<br/>Tries • DP • ...more]
+    
+    J --> K[Select a Pattern]
+    K --> L[View Sub-patterns]
+    L --> M[Questions from:<br/>🟢 LeetCode • 🟠 TUF<br/>🟡 GFG • 🔵 Codeforces]
+    
+    M --> N{Solve Question}
+    N --> O[✅ Mark Complete]
+    N --> P[🔄 Mark for Revision]
+    
+    O --> Q[(🔥 Firebase<br/>Real-time Sync)]
+    P --> Q
+    
+    Q --> R[📚 Sidebar Features]
+    R --> S[🔍 Search]
+    R --> T[📖 Books Storage]
+    R --> U[🔗 Links Storage]
+    R --> V[📝 Notes]
+    
+    Q --> W([🚀 Continue from<br/>Any Device])
 
-
+    style A fill:#8b5cf6,stroke:#a78bfa,color:#fff
+    style D fill:#f59e0b,stroke:#fbbf24,color:#fff
+    style E fill:#3b82f6,stroke:#60a5fa,color:#fff
+    style Q fill:#ef4444,stroke:#f87171,color:#fff
+    style W fill:#10b981,stroke:#34d399,color:#fff
+    style O fill:#22c55e,stroke:#4ade80,color:#fff
+    style P fill:#eab308,stroke:#facc15,color:#fff
 ---
 
 ### 🔄 Flow Summary
