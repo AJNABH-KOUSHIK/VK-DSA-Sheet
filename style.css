@@ -4357,3 +4357,49 @@ body:not(.user-logged-in) .problem input[type="checkbox"]:hover {
         font-size: 12px !important;
     }
 }
+
+/* ============================================
+   CENTER HERO HEADING
+   ============================================ */
+
+.left-top {
+    text-align: center !important;
+    width: 100% !important;
+}
+
+.hero-title {
+    text-align: center !important;
+}
+
+.hero-subtitle {
+    text-align: center !important;
+}
+
+/* Center the tagline words too */
+.hero-tagline {
+    text-align: center !important;
+    display: block !important;
+}
+
+/* Make top header center everything */
+.top-header {
+    align-items: center !important;
+}
+
+/* On desktop keep stats card on right, but title centered */
+@media (min-width: 769px) {
+    .top-header {
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+    }
+
+    .left-top {
+        max-width: 800px !important;
+        margin: 0 auto !important;
+    }
+
+    .stats-card {
+        margin-top: 20px !important;
+    }
+}
