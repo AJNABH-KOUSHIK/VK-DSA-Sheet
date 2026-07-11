@@ -8,20 +8,24 @@ const loginForm = document.getElementById('loginForm');
 const signupForm = document.getElementById('signupForm');
 
 // Open modal
+// Open modal
 if (loginBtn && modal) {
     loginBtn.addEventListener('click', () => {
         modal.style.display = 'block';
+        document.body.classList.add('login-modal-open'); // 🆕 ADD THIS
     });
 }
 
 if (closeBtn && modal) {
     closeBtn.addEventListener('click', () => {
         modal.style.display = 'none';
+        document.body.classList.remove('login-modal-open'); // 🆕 ADD THIS
     });
 
     window.addEventListener('click', e => {
         if (e.target == modal) {
             modal.style.display = 'none';
+            document.body.classList.remove('login-modal-open'); // 🆕 ADD THIS
         }
     });
 }
@@ -1196,6 +1200,7 @@ function updateProfileUI(user) {
 }
 
 // ============ PROFILE MODAL ============
+// ============ PROFILE MODAL ============
 function setupProfileModal() {
     const userInfoCircle = document.getElementById('userInfo');
     const profileModal = document.getElementById('profileModal');
@@ -1206,17 +1211,20 @@ function setupProfileModal() {
             e.stopPropagation();
             calculateAndPopulateProfileDetails();
             profileModal.style.display = 'block';
+            document.body.classList.add('profile-modal-open'); // 🆕 ADD THIS
         });
     }
 
     if (closeProfileBtn && profileModal) {
         closeProfileBtn.addEventListener('click', () => {
             profileModal.style.display = 'none';
+            document.body.classList.remove('profile-modal-open'); // 🆕 ADD THIS
         });
 
         window.addEventListener('click', (e) => {
             if (e.target == profileModal) {
                 profileModal.style.display = 'none';
+                document.body.classList.remove('profile-modal-open'); // 🆕 ADD THIS
             }
         });
     }
