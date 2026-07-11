@@ -3680,3 +3680,47 @@ body:not(.user-logged-in) .problem input[type="checkbox"]:hover {
         height: 34px !important;
     }
 }
+/* ============================================
+   FIX: Hide top bar buttons when history modal is open
+   ============================================ */
+
+@media (max-width: 768px) {
+    
+    /* When history modal is active, HIDE top bar buttons */
+    body:has(#historyModal.active) .profile-buttons-row,
+    body:has(#historyModal.active) .mobile-menu-btn,
+    body:has(#historyModal.active) .main::before {
+        display: none !important;
+    }
+
+    /* Alternative: bring modal ABOVE the buttons */
+    #historyModal {
+        z-index: 999999 !important;
+    }
+
+    #historyModal .history-modal-content,
+    .history-modal-content {
+        z-index: 999999 !important;
+        margin-top: 20px !important;
+        max-height: 88vh !important;
+    }
+
+    /* Hide the fixed top bar background when modal is open */
+    #historyModal.active ~ .main::before,
+    body:has(#historyModal.active) .main::before {
+        display: none !important;
+    }
+}
+
+/* Simpler fallback for browsers that don't support :has() */
+@media (max-width: 768px) {
+    #historyModal.active {
+        z-index: 999999 !important;
+    }
+    
+    /* Push modal content BELOW the top bar area */
+    #historyModal.active .history-modal-content {
+        margin-top: 75px !important;
+        max-height: 80vh !important;
+    }
+}
