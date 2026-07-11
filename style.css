@@ -3724,3 +3724,51 @@ body:not(.user-logged-in) .problem input[type="checkbox"]:hover {
         max-height: 80vh !important;
     }
 }
+/* ============================================
+   HIDE TOP BAR WHEN ANY MODAL IS OPEN (Mobile)
+   ============================================ */
+
+@media (max-width: 768px) {
+    
+    /* Hide top bar buttons when Profile Modal is open */
+    body.profile-modal-open .mobile-menu-btn,
+    body.profile-modal-open .profile-buttons-row {
+        display: none !important;
+    }
+
+    body.profile-modal-open .main::before {
+        display: none !important;
+    }
+
+    body.profile-modal-open {
+        overflow: hidden !important;
+    }
+
+    /* Hide top bar buttons when Login Modal is open */
+    body.login-modal-open .mobile-menu-btn,
+    body.login-modal-open .profile-buttons-row {
+        display: none !important;
+    }
+
+    body.login-modal-open .main::before {
+        display: none !important;
+    }
+
+    body.login-modal-open {
+        overflow: hidden !important;
+    }
+
+    /* Make ALL modals top priority */
+    #profileModal,
+    #loginModal,
+    #historyModal {
+        z-index: 999999 !important;
+    }
+
+    #profileModal .modal-content,
+    #loginModal .modal-content {
+        margin-top: 20px !important;
+        max-height: 90vh !important;
+        overflow-y: auto !important;
+    }
+}
