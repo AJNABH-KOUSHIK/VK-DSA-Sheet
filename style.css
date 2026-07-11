@@ -4359,54 +4359,135 @@ body:not(.user-logged-in) .problem input[type="checkbox"]:hover {
 }
 
 /* ============================================
-   PROPERLY CENTER HERO HEADING (DESKTOP)
+   🎨 NEW HERO HEADING - Practice. Master. Grow.
    ============================================ */
 
-@media (min-width: 769px) {
-    
-    /* Remove reserved right space from main - center everything */
-    .top-header {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
-        text-align: center !important;
-        width: 100% !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        /* Compensate for progressContainer being on right (145px = half of 290px padding) */
-        transform: translateX(-125px);
-    }
+.hero-title {
+    color: #ffffff !important;
+    font-size: 48px !important;
+    font-weight: 800 !important;
+    line-height: 1.15 !important;
+    margin: 0 !important;
+    letter-spacing: -1px !important;
+}
 
-    .left-top {
-        text-align: center !important;
-        width: auto !important;
-        max-width: 700px !important;
-        margin: 0 auto !important;
-        display: block !important;
-    }
+/* Tagline container */
+.hero-tagline {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
 
+/* Practice - Purple */
+.word-practice {
+    background: linear-gradient(135deg, #a855f7, #c084fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: inline-block;
+    margin-right: 6px;
+    animation: fadeSlideIn 0.6s ease backwards;
+    animation-delay: 0.1s;
+}
+
+/* Master - Blue */
+.word-master {
+    background: linear-gradient(135deg, #3b82f6, #60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: inline-block;
+    margin-right: 6px;
+    animation: fadeSlideIn 0.6s ease backwards;
+    animation-delay: 0.3s;
+}
+
+/* Grow - Green */
+.word-grow {
+    background: linear-gradient(135deg, #22c55e, #4ade80);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: inline-block;
+    animation: fadeSlideIn 0.6s ease backwards;
+    animation-delay: 0.5s;
+}
+
+/* Subtitle */
+.hero-subtitle {
+    color: #94a3b8 !important;
+    font-size: 15px !important;
+    margin-top: 16px !important;
+    font-weight: 400 !important;
+    line-height: 1.5 !important;
+}
+
+/* Animation */
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Hover effect on each word */
+.word-practice:hover,
+.word-master:hover,
+.word-grow:hover {
+    transform: translateY(-3px) scale(1.05);
+    transition: transform 0.3s ease;
+    cursor: default;
+}
+
+.word-practice,
+.word-master,
+.word-grow {
+    transition: transform 0.3s ease;
+    cursor: default;
+}
+
+/* ============================================
+   MOBILE RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
     .hero-title {
-        text-align: center !important;
-        display: block !important;
-        width: 100% !important;
+        font-size: 36px !important;
     }
 
     .hero-tagline {
-        text-align: center !important;
-        display: block !important;
-        width: 100% !important;
+        font-size: 30px !important;
+        margin-top: 6px !important;
     }
 
     .hero-subtitle {
-        text-align: center !important;
-        display: block !important;
-        width: 100% !important;
+        font-size: 13px !important;
+        margin-top: 12px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 30px !important;
     }
 
-    /* Reset stats card position */
-    .stats-card {
-        margin: 20px auto 0 auto !important;
-        transform: translateX(0) !important;
+    .hero-tagline {
+        font-size: 26px !important;
+    }
+
+    .word-practice,
+    .word-master,
+    .word-grow {
+        margin-right: 4px;
+    }
+
+    .hero-subtitle {
+        font-size: 12px !important;
     }
 }
