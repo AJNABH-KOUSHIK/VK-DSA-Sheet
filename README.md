@@ -202,9 +202,6 @@ Here's how the entire application works from the user's perspective:
 └─────────────────────────────────────────────────────────────┘
 </pre>
 
-### 🔄 Flow Summary
-
-**User Visits** → **Browses Patterns** → **Login/Sign Up** → **Selects Pattern** → **Solves Question** → **Marks ✅ Complete / 🔄 Revision** → **Progress Saved to Firebase** → **Views Calendar & Stats** → **Stores Books/Links/Notes** → **Continues from Any Device**
 
 ---
 
