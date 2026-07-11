@@ -8859,35 +8859,69 @@ onchange="markDone(this,'Minimum Window Sort','Medium')"></div>
     </div>
 </div>
     <!-- PRACTICE HISTORY POPUP -->
-<div class="history-popup" id="historyPopup">
-
-    <div class="history-box">
-
+<!-- PRACTICE HISTORY MODAL - REDESIGNED -->
+<div id="historyModal" class="modal">
+    <div class="modal-content history-modal-content">
+        
+        <!-- HEADER -->
         <div class="history-header">
-            <h2>Practice History</h2>
-
-            <button onclick="closeHistory()">X</button>
+            <div class="history-title-wrap">
+                <div class="history-title-icon">📊</div>
+                <div class="history-title-text">
+                    <h2>Practice History</h2>
+                    <p>Track your coding journey & progress</p>
+                </div>
+            </div>
+            <button class="history-close" onclick="closeHistory()">✕</button>
         </div>
 
-        <table>
+        <!-- STATS BAR -->
+        <div class="history-stats-bar">
+            <div class="history-stat-box">
+                <div class="history-stat-icon stat-total">🎯</div>
+                <div class="history-stat-info">
+                    <span class="history-stat-num" id="histTotal">0</span>
+                    <span class="history-stat-label">Total</span>
+                </div>
+            </div>
+            <div class="history-stat-box">
+                <div class="history-stat-icon stat-easy">🟢</div>
+                <div class="history-stat-info">
+                    <span class="history-stat-num" id="histEasy">0</span>
+                    <span class="history-stat-label">Easy</span>
+                </div>
+            </div>
+            <div class="history-stat-box">
+                <div class="history-stat-icon stat-medium">🟡</div>
+                <div class="history-stat-info">
+                    <span class="history-stat-num" id="histMedium">0</span>
+                    <span class="history-stat-label">Medium</span>
+                </div>
+            </div>
+            <div class="history-stat-box">
+                <div class="history-stat-icon stat-hard">🔴</div>
+                <div class="history-stat-info">
+                    <span class="history-stat-num" id="histHard">0</span>
+                    <span class="history-stat-label">Hard</span>
+                </div>
+            </div>
+        </div>
 
-            <thead>
-                <tr>
-                    <th>Last Submitted</th>
-                    <th>Problem</th>
-                    <th>Status</th>
-                    <th>Difficulty</th>
-                </tr>
-            </thead>
+        <!-- TABLE -->
+        <div class="history-table-wrap">
+            <div class="history-table-header">
+                <span>Last Submitted</span>
+                <span>Problem</span>
+                <span>Status</span>
+                <span>Difficulty</span>
+            </div>
 
-            <tbody id="historyTableBody">
-
-            </tbody>
-
-        </table>
+            <div id="historyTableBody">
+                <!-- Rows will be inserted here dynamically -->
+            </div>
+        </div>
 
     </div>
-
 </div>
 
     <script src="script.js" defer></script>
