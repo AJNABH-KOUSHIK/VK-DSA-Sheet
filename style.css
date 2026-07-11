@@ -3772,3 +3772,191 @@ body:not(.user-logged-in) .problem input[type="checkbox"]:hover {
         overflow-y: auto !important;
     }
 }
+
+/* ============================================
+   MOBILE - FIX CHECKBOX TICK ALIGNMENT
+   ============================================ */
+
+@media (max-width: 768px) {
+    
+    /* Fix checkbox size and alignment */
+    .done input[type="checkbox"],
+    .revision input[type="checkbox"] {
+        width: 22px !important;
+        height: 22px !important;
+        border: 2px solid #a855f7 !important;
+        border-radius: 6px !important;
+        background-color: #0f0f23 !important;
+        cursor: pointer;
+        position: relative !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        appearance: none !important;
+        -webkit-appearance: none !important;
+        -moz-appearance: none !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Perfectly center the tick mark */
+    .done input[type="checkbox"]:checked::after,
+    .revision input[type="checkbox"]:checked::after {
+        content: "✓" !important;
+        position: absolute !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        font-size: 16px !important;
+        font-weight: bold !important;
+        color: #06b6d4 !important;
+        line-height: 1 !important;
+    }
+
+    /* Ensure checkbox containers align properly */
+    .problem .done,
+    .problem .revision {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+}
+
+/* ============================================
+   MOBILE - EQUAL WIDTH DIFFICULTY BARS
+   ============================================ */
+
+@media (max-width: 768px) {
+    
+    /* Make all difficulty badges EQUAL width */
+    .problem .difficulty {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+        min-width: 80px !important;
+        max-width: 100px !important;
+        padding: 6px 12px !important;
+        font-size: 12px !important;
+        font-weight: 600 !important;
+        border-radius: 8px !important;
+        text-align: center !important;
+        margin: 0 auto !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Better bordered look for difficulty on mobile */
+    .problem .difficulty.easy {
+        background: rgba(34, 197, 94, 0.15) !important;
+        color: #22c55e !important;
+        border: 1px solid rgba(34, 197, 94, 0.4) !important;
+    }
+
+    .problem .difficulty.medium {
+        background: rgba(251, 191, 36, 0.15) !important;
+        color: #fbbf24 !important;
+        border: 1px solid rgba(251, 191, 36, 0.4) !important;
+    }
+
+    .problem .difficulty.hard {
+        background: rgba(239, 68, 68, 0.15) !important;
+        color: #ef4444 !important;
+        border: 1px solid rgba(239, 68, 68, 0.4) !important;
+    }
+}
+
+/* ============================================
+   MOBILE - FIX PROBLEM ROW LAYOUT
+   ============================================ */
+
+@media (max-width: 768px) {
+    
+    /* Better grid layout - equal columns for buttons */
+    .problem {
+        display: grid !important;
+        grid-template-columns: 1fr 40px 40px 40px 90px !important;
+        gap: 8px !important;
+        align-items: center !important;
+        padding: 14px 10px !important;
+    }
+
+    .problem .title {
+        font-size: 13px !important;
+        font-weight: 600 !important;
+        color: #fff !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+
+    /* TUF badge - consistent size */
+    .tuf-badge {
+        width: 34px !important;
+        height: 26px !important;
+        padding: 0 !important;
+        font-size: 10px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border-radius: 6px !important;
+        margin: 0 auto !important;
+    }
+
+    /* Icons (LC/GFG) - consistent size */
+    .center .icon {
+        width: 24px !important;
+        height: 24px !important;
+        margin: 0 auto !important;
+        display: block !important;
+    }
+
+    /* Center all icon containers */
+    .problem .center {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+}
+
+/* SMALLER PHONES */
+@media (max-width: 480px) {
+    
+    .problem {
+        grid-template-columns: 1fr 36px 36px 36px 80px !important;
+        gap: 6px !important;
+        padding: 12px 8px !important;
+    }
+
+    .problem .title {
+        font-size: 12px !important;
+    }
+
+    .done input[type="checkbox"],
+    .revision input[type="checkbox"] {
+        width: 20px !important;
+        height: 20px !important;
+    }
+
+    .done input[type="checkbox"]:checked::after,
+    .revision input[type="checkbox"]:checked::after {
+        font-size: 14px !important;
+    }
+
+    .problem .difficulty {
+        min-width: 70px !important;
+        max-width: 80px !important;
+        padding: 5px 8px !important;
+        font-size: 11px !important;
+    }
+
+    .tuf-badge {
+        width: 30px !important;
+        height: 24px !important;
+        font-size: 9px !important;
+    }
+
+    .center .icon {
+        width: 22px !important;
+        height: 22px !important;
+    }
+}
