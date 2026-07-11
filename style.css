@@ -3423,49 +3423,49 @@ body:not(.user-logged-in) .problem input[type="checkbox"]:hover {
 }
 
 /* ============================================
-   MOBILE TOP BAR - SOLID BACKGROUND (No Blur)
+   MOBILE TOP BAR - COMPLETELY OPAQUE (Blocks scroll content)
    ============================================ */
 
 @media (max-width: 768px) {
     
-    /* Solid dark background for top bar area */
+    /* SOLID OPAQUE BAR - blocks everything behind it */
     body::before {
         content: '';
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
-        height: 65px;
-        background: #0f0c29;  /* Same as your page background */
-        z-index: 998;
+        width: 100%;
+        height: 70px;
+        background: #0a0a1e;  /* Solid opaque - no transparency */
+        z-index: 9998;         /* Very high - covers everything */
         pointer-events: none;
-        border-bottom: 1px solid rgba(139, 92, 246, 0.15);
+        border-bottom: 1px solid rgba(139, 92, 246, 0.2);
     }
 
-    /* Hamburger button */
+    /* Hamburger button - ABOVE the bar */
     .mobile-menu-btn {
         position: fixed !important;
-        top: 12px !important;
+        top: 15px !important;
         left: 15px !important;
-        z-index: 1000 !important;
+        z-index: 9999 !important;  /* Higher than bar */
         display: block !important;
-        background: rgba(139, 92, 246, 0.2) !important;
-        border: 1px solid rgba(139, 92, 246, 0.4) !important;
+        background: rgba(139, 92, 246, 0.25) !important;
+        border: 1px solid rgba(139, 92, 246, 0.5) !important;
         color: white !important;
         padding: 8px 12px !important;
         border-radius: 10px !important;
         font-size: 20px !important;
         cursor: pointer;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
-    /* Top-right buttons row */
+    /* Buttons row - ABOVE the bar */
     .profile-buttons-row {
         position: fixed !important;
-        top: 10px !important;
+        top: 12px !important;
         right: 12px !important;
         left: auto !important;
-        z-index: 999 !important;
+        z-index: 9999 !important;  /* Higher than bar */
         display: flex !important;
         flex-direction: row !important;
         align-items: center !important;
@@ -3473,22 +3473,20 @@ body:not(.user-logged-in) .problem input[type="checkbox"]:hover {
         margin: 0 !important;
         width: auto !important;
         background: transparent !important;
-        padding: 4px 6px !important;
-        border-radius: 30px !important;
     }
 
-    /* Push all main content DOWN so it doesn't hide under the top bar */
+    /* Push page content DOWN below the fixed bar */
     .main {
-        padding-top: 80px !important;
+        padding-top: 85px !important;
     }
 }
 
 @media (max-width: 480px) {
     body::before {
-        height: 60px;
+        height: 65px;
     }
 
     .main {
-        padding-top: 75px !important;
+        padding-top: 80px !important;
     }
 }
