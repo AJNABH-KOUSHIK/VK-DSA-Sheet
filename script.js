@@ -926,11 +926,61 @@ function markDone(checkbox, problemName, difficulty) {
 // ============ HISTORY ============
 let historyInterval;
 function openHistory() {
-    document.getElementById("historyPopup").style.display = "flex";
-    loadHistory();
-    historyInterval = setInterval(() => {
-        loadHistory();
-    }, 1000);
+    const modal = document.getElementById('historyModal');
+    const tbody = document.getElementById('historyTableBody');
+    tbody.innerHTML = ''; // Clear old data
+
+    // Get your history data (adjust based on your existing code)
+    const historyData = getHistoryData(); // Your existing function
+
+    // Update stats
+    let easyCount = 0, medCount = 0, hardCount = 0;
+    historyData.forEach(item => {
+        if (item.difficulty === 'Easy') easyCount++;
+        else if (item.difficulty === 'Medium') medCount++;
+        else if (item.difficulty === 'Hard') hardCount++;
+    });
+
+    document.getElementById('histTotal').textContent = historyData.length;
+    document.getElementById('histEasy').textContent = easyCount;
+    document.getElementById('histMedium').textContent = medCount;
+    document.getElementById('histHard').textContent = hardCount;
+
+    // Generate rows
+    if (historyData.length === 0) {
+        tbody.innerHTML = `
+            <div class="history-empty">
+                <div class="history-empty-icon">📭</div>
+                <h3>No practice history yet</h3>
+                <p>Start solving problems to see your journey!</p>
+            </div>
+        `;
+    } else {
+        historyData.forEach(item => {
+            const row = document.createElement('div');
+            row.className = 'history-row';
+            row.innerHTML = `
+                <span class="history-time">${item.timeAgo}</span>
+                <span class="history-problem">${item.problem}</span>
+                <div class="history-status">
+                    <span class="status-badge">Accepted</span>
+                </div>
+                <div class="history-difficulty">
+                    <span class="diff-badge ${item.difficulty.toLowerCase()}">${item.difficulty}</span>
+                </div>
+            `;
+            tbody.appendChild(row);
+        });
+    }
+
+    modal.classList.add('active');
+    modal.style.display = 'flex';
+}
+
+function closeHistory() {
+    const modal = document.getElementById('historyModal');
+    modal.classList.remove('active');
+    modal.style.display = 'none';
 }
 
 function getTimeAgo(timestamp) {
@@ -972,10 +1022,7 @@ function loadHistory() {
     });
 }
 
-function closeHistory() {
-    document.getElementById("historyPopup").style.display = "none";
-    clearInterval(historyInterval);
-}
+
 
 // ============ DOM READY ============
 document.addEventListener("DOMContentLoaded", async () => {
