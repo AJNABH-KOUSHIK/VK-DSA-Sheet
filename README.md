@@ -222,8 +222,6 @@ Here's how the entire application works from the user's perspective:
 
 ## 📸 Screenshots
 
-## 📸 Screenshots
-
 ### 🏠 Home — Dashboard View
 > Pattern categories, total solved counter, difficulty breakdown, and calendar — all at a glance.
 
