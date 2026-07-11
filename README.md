@@ -1,7 +1,7 @@
 <div align="center">
-
+---
 # 🧠 VK DSA Sheet
-
+---
 ### *Master Patterns. Solve Problems. Level Up.*
 
 > The **only** free, open-source DSA practice sheet that combines questions from **all major coding platforms** — organized by **patterns**, not just topics — with built-in progress tracking, revision management, and a personal knowledge base.
@@ -12,8 +12,6 @@
 [![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)]()
 
 <br/>
-
-
 
 </div>
 
