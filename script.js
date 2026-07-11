@@ -181,22 +181,33 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // LOGOUT
+// LOGOUT
 async function handleLogout() {
     await waitForFirebase();
     try {
-        await saveAllToFirebase();
+        // 🔥 SAVE current data to Firebase FIRST before logout
+        if (window.currentUser) {
+            console.log("💾 Saving data before logout...");
+            await saveAllToFirebase();
+            console.log("✅ Data saved successfully");
+        }
+        
+        // Then sign out
         await window.firebaseSignOut(window.firebaseAuth);
 
+        // Clear localStorage (auth listener will also do this)
         localStorage.removeItem('checkboxes');
         localStorage.removeItem('notes');
         localStorage.removeItem('links');
         localStorage.removeItem('books');
         localStorage.removeItem('doneDates');
         localStorage.removeItem('practiceHistory');
+        localStorage.removeItem('userJoinDate');
 
         showToast('See you soon! 👋', 'info', 'Logged Out');
-        setTimeout(() => location.reload(), 1200); // small delay so user sees the toast
+        setTimeout(() => location.reload(), 1200);
     } catch (err) {
+        console.error("Logout error:", err);
         showToast(getFriendlyError(err), 'error', 'Logout Failed');
     }
 }
@@ -205,49 +216,64 @@ window.handleLogout = handleLogout;
 // AUTH STATE LISTENER
 let authInitialized = false;
 
+// AUTH STATE LISTENER
 async function initAuthListener() {
     await waitForFirebase();
 
     window.firebaseOnAuth(window.firebaseAuth, async (user) => {
         if (user) {
-            console.log("User logged in:", user.email);
+            console.log("✅ User logged in:", user.email);
             window.currentUser = user;
+            
+            // 🔥 ALWAYS load fresh data from Firebase on login
+            await loadFromFirebase(user.uid);
+            
+            // Update UI after data is loaded
             updateProfileUI(user);
-
-            if (!authInitialized) {
-                authInitialized = true;
-                await loadFromFirebase(user.uid);
-            }
+            
         } else {
-    localStorage.removeItem('checkboxes');
-    localStorage.removeItem('notes');
-    localStorage.removeItem('links');
-    localStorage.removeItem('books');
-    localStorage.removeItem('doneDates');
-    localStorage.removeItem('practiceHistory');
+            console.log("👋 User logged out");
+            
+            // Clear all data
+            localStorage.removeItem('checkboxes');
+            localStorage.removeItem('notes');
+            localStorage.removeItem('links');
+            localStorage.removeItem('books');
+            localStorage.removeItem('doneDates');
+            localStorage.removeItem('practiceHistory');
+            localStorage.removeItem('userJoinDate');
 
-    window.currentUser = null;
-    authInitialized = false;
-    window.currentUserProfileData = null;
-    updateProfileUI(null);
+            window.currentUser = null;
+            window.currentUserProfileData = null;
+            
+            // Uncheck all checkboxes
+            document.querySelectorAll('.problem input[type="checkbox"]').forEach(cb => {
+                cb.checked = false;
+            });
+            
+            // Clear all containers
+            const notesContainer = document.getElementById('notesContainer');
+            const linksContainer = document.getElementById('linksContainer');
+            const booksContainer = document.getElementById('booksContainer');
+            if (notesContainer) notesContainer.innerHTML = '';
+            if (linksContainer) linksContainer.innerHTML = '';
+            if (booksContainer) booksContainer.innerHTML = '';
 
-    // Clear all containers so previous user's data disappears
-    const notesContainer = document.getElementById('notesContainer');
-    const linksContainer = document.getElementById('linksContainer');
-    const booksContainer = document.getElementById('booksContainer');
-    if (notesContainer) notesContainer.innerHTML = '';
-    if (linksContainer) linksContainer.innerHTML = '';
-    if (booksContainer) booksContainer.innerHTML = '';
+            // Update UI
+            updateProfileUI(null);
 
-    if (typeof loadCheckboxesAndProgress === 'function') {
-        loadCheckboxesAndProgress();
-        updateGlobalProgress();
-        updateTotalSolvedStats();
-    }
-}
+            // Refresh all UI stats
+            if (typeof loadCheckboxesAndProgress === 'function') {
+                loadCheckboxesAndProgress();
+                updateGlobalProgress();
+                updateTotalSolvedStats();
+                loadCalendar();
+            }
+        }
     });
 }
 
+// LOAD USER DATA FROM FIREBASE
 // LOAD USER DATA FROM FIREBASE
 async function loadFromFirebase(uid) {
     try {
@@ -257,17 +283,16 @@ async function loadFromFirebase(uid) {
         if (userDoc.exists()) {
             const data = userDoc.data();
 
-            // 🆕 Store join date
+            // Store join date
             if (data.joinDate) {
                 localStorage.setItem('userJoinDate', data.joinDate);
             } else {
-                // For existing users without joinDate, set it now
                 const fallbackDate = new Date().toISOString();
                 localStorage.setItem('userJoinDate', fallbackDate);
                 await window.firebaseSetDoc(userDocRef, { joinDate: fallbackDate }, { merge: true });
             }
 
-            // ... rest of your existing code
+            // Load all data into localStorage
             localStorage.setItem('checkboxes', JSON.stringify(data.checkboxes || {}));
             localStorage.setItem('notes', JSON.stringify(data.notes || []));
             localStorage.setItem('links', JSON.stringify(data.links || []));
@@ -275,10 +300,27 @@ async function loadFromFirebase(uid) {
             localStorage.setItem('doneDates', JSON.stringify(data.doneDates || []));
             localStorage.setItem('practiceHistory', JSON.stringify(data.practiceHistory || []));
 
-            // ... rest of existing code
+            // Store profile data
+            window.currentUserProfileData = {
+                name: data.name || window.currentUser.displayName || "User",
+                phone: data.phone || window.currentUser.phoneNumber || "Not Provided"
+            };
+
+            // 🔥 CRITICAL: APPLY DATA TO UI (this was missing!)
+            loadCheckboxesAndProgress();           // ← Apply saved ticks to checkboxes
+            attachStaticCheckboxListeners();        // ← Re-attach listeners
+            loadHistory();                          // ← Load history
+            loadCalendar();                         // ← Reload calendar with dates
+            updateGlobalProgress();                 // ← Update progress circle
+            updateTotalSolvedStats();               // ← Update total stats
+            loadNotesLinksBooks();                  // ← Render notes/links/books
+
+            console.log("✅ Data loaded from Firebase and applied to UI");
+        } else {
+            console.log("⚠️ No user data found in Firebase");
         }
     } catch (err) {
-        console.error("Error loading data:", err);
+        console.error("❌ Error loading data from Firebase:", err);
     }
 }
 
@@ -887,10 +929,11 @@ function updateTotalSolvedStats() {
 window.updateTotalSolvedStats = updateTotalSolvedStats;
 
 // ============ MARK DONE ============
+// ============ MARK DONE ============
 function markDone(checkbox, problemName, difficulty) {
     const problemRow = checkbox.closest('.problem');
 
-    // Auto-detect difficulty from DOM (overrides hardcoded value)
+    // Auto-detect difficulty from DOM
     const diffEl = problemRow ? problemRow.querySelector('.difficulty') : null;
     if (diffEl) {
         difficulty = diffEl.innerText.trim();
@@ -927,9 +970,14 @@ function markDone(checkbox, problemName, difficulty) {
     }
 
     localStorage.setItem("doneDates", JSON.stringify(savedDates));
-    loadCalendar();
     localStorage.setItem("practiceHistory", JSON.stringify(history));
+    loadCalendar();
     loadHistory();
+
+    // 🔥 CRITICAL: Save to Firebase IMMEDIATELY (not just wait for auto-save)
+    if (window.currentUser) {
+        saveAllToFirebase();
+    }
 }
 
 // ============ HISTORY ============
@@ -1074,6 +1122,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 // ============ STATIC CHECKBOX LISTENERS ============
+// ============ STATIC CHECKBOX LISTENERS ============
 function attachStaticCheckboxListeners() {
     document.querySelectorAll('.section').forEach(section => {
         const category = section.dataset.category;
@@ -1084,7 +1133,6 @@ function attachStaticCheckboxListeners() {
             if (!titleEl) return;
             const title = titleEl.innerText.trim();
 
-            // Auto-detect difficulty from DOM
             const diffEl = prob.querySelector('.difficulty');
             const difficulty = diffEl ? diffEl.innerText.trim() : "Medium";
 
@@ -1094,6 +1142,7 @@ function attachStaticCheckboxListeners() {
 
                 const key = `${category}-${sectionName}-${title}-${type}`;
 
+                // Remove old listeners by cloning
                 const newCheckbox = checkbox.cloneNode(true);
                 newCheckbox.checked = checkbox.checked;
                 checkbox.parentNode.replaceChild(newCheckbox, checkbox);
@@ -1109,11 +1158,21 @@ function attachStaticCheckboxListeners() {
 
                     if (type === 'done') {
                         markDone(newCheckbox, title, difficulty);
+                    } else {
+                        // 🔥 Save revision ticks to Firebase too
+                        if (window.currentUser) {
+                            saveAllToFirebase();
+                        }
                     }
                 });
             });
         });
     });
+
+    // 🔥 Re-attach login guard after cloning checkboxes
+    if (typeof attachLoginGuardToCheckboxes === 'function') {
+        attachLoginGuardToCheckboxes();
+    }
 }
 
 // ============ CALENDAR ============
