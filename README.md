@@ -13,7 +13,7 @@
 
 <br/>
 
-<img src="https://github.com/user-attachments/assets/YOUR_SCREENSHOT_ID_HERE" alt="VK DSA Sheet Dashboard" width="90%" />
+
 
 </div>
 
