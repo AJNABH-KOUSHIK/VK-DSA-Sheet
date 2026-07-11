@@ -222,26 +222,27 @@ Here's how the entire application works from the user's perspective:
 
 ## 📸 Screenshots
 
+## 📸 Screenshots
+
 ### 🏠 Home — Dashboard View
 > Pattern categories, total solved counter, difficulty breakdown, and calendar — all at a glance.
 
-<img src="https://github.com/user-attachments/assests/image.png" alt="Dashboard" width="90%" />
+![Dashboard](./assests/image.jpg)
 
 ### 📋 Pattern View — Sub-patterns with Progress
 > Each pattern category expands into sub-patterns with individual progress tracking.
 
-<img src="https://github.com/user-attachments/assests/image2.png" alt="Pattern View" width="90%" />
+![Pattern View](./assests/image2.jpg)
 
 ### 📚 Books & Resources
 > Store recommended books and save your own favorites.
 
-<img src="https://github.com/user-attachments/assests/image3.png" alt="Books" width="90%" />
+![Books](./assests/image3.jpg)
 
 ### 🔗 Links & 📝 Notes
 > Your personal knowledge vault — save important links and write notes.
 
-<img src="https://github.com/user-attachments/assests/image4.png" alt="Links and Notes" width="90%" />
-
+![Links and Notes](./assests/image4.jpg)
 ---
 
 ## 🗺️ DSA Patterns Covered
