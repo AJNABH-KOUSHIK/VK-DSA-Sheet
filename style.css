@@ -3490,3 +3490,101 @@ body:not(.user-logged-in) .problem input[type="checkbox"]:hover {
         padding-top: 80px !important;
     }
 }
+/* ============================================
+   MOBILE - MAKE TOP BAR BUTTONS FULLY VISIBLE
+   ============================================ */
+
+@media (max-width: 768px) {
+    
+    /* Practice History Button - Bold & Visible */
+    #historyBtn {
+        background: rgba(139, 92, 246, 0.2) !important;
+        border: 1px solid rgba(139, 92, 246, 0.5) !important;
+        color: #fbbf24 !important;
+        opacity: 1 !important;
+        padding: 8px 14px !important;
+        font-size: 12px !important;
+        font-weight: 700 !important;
+        border-radius: 20px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    #historyBtn .history-text {
+        color: #fbbf24 !important;
+        -webkit-text-fill-color: #fbbf24 !important;
+        background: none !important;
+        font-weight: 700 !important;
+    }
+
+    /* Logout Button - Bold & Visible */
+    #logoutBtn {
+        background: rgba(239, 68, 68, 0.2) !important;
+        border: 1px solid rgba(239, 68, 68, 0.5) !important;
+        color: #ff6b6b !important;
+        opacity: 1 !important;
+        padding: 8px 14px !important;
+        font-size: 12px !important;
+        font-weight: 700 !important;
+        border-radius: 20px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    /* Login Button - Bold & Visible */
+    #loginBtn {
+        background: rgba(139, 92, 246, 0.25) !important;
+        border: 1px solid rgba(139, 92, 246, 0.5) !important;
+        color: #ffffff !important;
+        opacity: 1 !important;
+        padding: 8px 14px !important;
+        font-size: 12px !important;
+        font-weight: 700 !important;
+        border-radius: 20px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    /* Profile Circle (A) - Bold Border & Visible */
+    .user-profile,
+    #userInfo {
+        opacity: 1 !important;
+    }
+
+    .profile-picture {
+        width: 38px !important;
+        height: 38px !important;
+        border: 2px solid rgba(139, 92, 246, 0.6) !important;
+        box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4) !important;
+        opacity: 1 !important;
+    }
+
+    /* Remove any dim overlay */
+    .profile-buttons-row * {
+        opacity: 1 !important;
+    }
+
+    /* Make sure buttons are ABOVE the solid bar background */
+    .profile-buttons-row {
+        z-index: 10000 !important;
+    }
+
+    #historyBtn,
+    #logoutBtn,
+    #loginBtn,
+    .user-profile {
+        position: relative;
+        z-index: 10000 !important;
+    }
+}
+
+@media (max-width: 480px) {
+    #historyBtn,
+    #logoutBtn,
+    #loginBtn {
+        padding: 7px 12px !important;
+        font-size: 11px !important;
+    }
+
+    .profile-picture {
+        width: 34px !important;
+        height: 34px !important;
+    }
+}
