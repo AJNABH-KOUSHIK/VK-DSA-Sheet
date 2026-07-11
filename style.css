@@ -2684,3 +2684,197 @@ body:not(.user-logged-in) .problem input[type="checkbox"]:hover {
     border-color: #ef4444 !important;
     box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
 }
+
+/* ============================================
+   MOBILE LAYOUT FIX - Header & Progress
+   ============================================ */
+
+@media (max-width: 768px) {
+    
+    /* 1. Make hamburger + buttons in ONE row at top */
+    .main {
+        padding-top: 70px !important;
+        position: relative;
+    }
+
+    /* Position hamburger on top-left */
+    .mobile-menu-btn {
+        position: fixed !important;
+        top: 15px !important;
+        left: 15px !important;
+        z-index: 1000 !important;
+        display: block !important;
+        background: rgba(139, 92, 246, 0.15) !important;
+        border: 1px solid rgba(139, 92, 246, 0.4) !important;
+        color: white !important;
+        padding: 10px 14px !important;
+        border-radius: 10px !important;
+        font-size: 20px !important;
+        cursor: pointer;
+    }
+
+    /* Move Profile + Buttons Row to top-right */
+    .profile-buttons-row {
+        position: fixed !important;
+        top: 12px !important;
+        right: 15px !important;
+        left: auto !important;
+        z-index: 999 !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 8px !important;
+        margin: 0 !important;
+        width: auto !important;
+        background: transparent !important;
+    }
+
+    .buttons-group {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 6px !important;
+        align-items: center !important;
+    }
+
+    /* Make buttons smaller on mobile */
+    .buttons-group button {
+        padding: 7px 12px !important;
+        font-size: 12px !important;
+        border-radius: 20px !important;
+        white-space: nowrap;
+    }
+
+    #loginBtn, #historyBtn, #logoutBtn {
+        font-size: 12px !important;
+        padding: 7px 12px !important;
+    }
+
+    /* Profile picture stays circle & small */
+    .user-profile {
+        margin: 0 !important;
+    }
+
+    .profile-picture {
+        width: 36px !important;
+        height: 36px !important;
+    }
+
+    /* 2. Title comes below - full width */
+    .top-header {
+        flex-direction: column !important;
+        margin-top: 10px !important;
+        gap: 15px !important;
+    }
+
+    .left-top {
+        width: 100% !important;
+        text-align: left !important;
+    }
+
+    .hero-title {
+        font-size: 32px !important;
+        line-height: 1.2 !important;
+        margin-top: 10px !important;
+    }
+
+    .hero-subtitle {
+        font-size: 14px !important;
+    }
+
+    /* 3. Calendar + Progress Circle in ONE ROW side-by-side */
+    #progressContainer {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        gap: 15px !important;
+        width: 100% !important;
+        margin: 20px 0 !important;
+        position: static !important;
+    }
+
+    #calendarBox {
+        flex: 1 !important;
+        max-width: 60% !important;
+        padding: 12px !important;
+        margin: 0 !important;
+    }
+
+    .calendar-header {
+        font-size: 13px !important;
+    }
+
+    .weekdays span,
+    #calendarDays > * {
+        font-size: 11px !important;
+    }
+
+    .progress-circle {
+        width: 110px !important;
+        height: 110px !important;
+        font-size: 20px !important;
+        margin: 0 !important;
+        flex-shrink: 0 !important;
+    }
+
+    /* 4. Total Solved / Stats Card goes BELOW */
+    .stats-card {
+        width: 100% !important;
+        margin: 0 !important;
+        order: 3 !important;
+    }
+
+    /* Tabs scroll horizontally on mobile */
+    .tabs {
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        display: flex !important;
+        gap: 8px !important;
+        padding-bottom: 8px !important;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .tab {
+        flex-shrink: 0 !important;
+        font-size: 13px !important;
+        padding: 8px 14px !important;
+    }
+}
+
+/* Even smaller screens (like your 540px phone) */
+@media (max-width: 480px) {
+    
+    .buttons-group button {
+        padding: 6px 10px !important;
+        font-size: 11px !important;
+    }
+
+    #historyBtn {
+        font-size: 11px !important;
+    }
+
+    #logoutBtn {
+        padding: 6px 10px !important;
+        font-size: 11px !important;
+    }
+
+    .profile-picture {
+        width: 32px !important;
+        height: 32px !important;
+    }
+
+    .hero-title {
+        font-size: 28px !important;
+    }
+
+    #calendarBox {
+        max-width: 58% !important;
+        padding: 10px !important;
+    }
+
+    .progress-circle {
+        width: 100px !important;
+        height: 100px !important;
+        font-size: 18px !important;
+    }
+}
