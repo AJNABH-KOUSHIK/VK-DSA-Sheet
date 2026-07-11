@@ -1115,6 +1115,7 @@ function attachStaticCheckboxListeners() {
 
 // ============ CALENDAR ============
 // ============ CALENDAR WITH FULL HISTORY ============
+// ============ CALENDAR WITH FULL HISTORY ============
 let currentCalendarMonth = new Date().getMonth();
 let currentCalendarYear = new Date().getFullYear();
 
@@ -1123,26 +1124,63 @@ function loadCalendar() {
     const calendarDays = document.getElementById("calendarDays");
     const prevBtn = document.getElementById("prevMonthBtn");
     const nextBtn = document.getElementById("nextMonthBtn");
-    if (!monthYear || !calendarDays) return;
+    const calendarBox = document.getElementById("calendarBox");
+    if (!monthYear || !calendarDays || !calendarBox) return;
+
+    // 🔒 CHECK IF USER IS LOGGED OUT - Show login prompt
+    if (!window.currentUser) {
+        // Hide navigation buttons
+        if (prevBtn) prevBtn.style.display = 'none';
+        if (nextBtn) nextBtn.style.display = 'none';
+        
+        // Show login prompt in calendar area
+        monthYear.innerText = '';
+        calendarDays.innerHTML = `
+            <div class="calendar-login-prompt">
+                <div class="login-lock-icon">🔒</div>
+                <p class="login-prompt-text">Login to view your progress</p>
+                <button class="login-prompt-btn" onclick="openLoginFromCalendar()">
+                    Login Now
+                </button>
+            </div>
+        `;
+        
+        // Hide weekdays too
+        const weekdays = document.querySelector('.weekdays');
+        if (weekdays) weekdays.style.display = 'none';
+        
+        // Hide legend
+        const legend = document.querySelector('.calendar-legend');
+        if (legend) legend.style.display = 'none';
+        
+        return;
+    }
+
+    // ✅ USER IS LOGGED IN - Show normal calendar
+    if (prevBtn) prevBtn.style.display = 'flex';
+    if (nextBtn) nextBtn.style.display = 'flex';
+    
+    const weekdays = document.querySelector('.weekdays');
+    if (weekdays) weekdays.style.display = 'grid';
+    
+    const legend = document.querySelector('.calendar-legend');
+    if (legend) legend.style.display = 'flex';
 
     const year = currentCalendarYear;
     const month = currentCalendarMonth;
     const firstDay = new Date(year, month, 1).getDay();
     const totalDays = new Date(year, month + 1, 0).getDate();
 
-    // Get user join date (from Firebase or fallback to current month)
     const joinDate = getUserJoinDate();
     const joinYear = joinDate.getFullYear();
     const joinMonth = joinDate.getMonth();
 
-    // Get today
     const today = new Date();
     const currentYear = today.getFullYear();
     const currentMonth = today.getMonth();
 
     // Disable/enable navigation buttons
     if (prevBtn) {
-        // Can't go before user's join month
         if (year === joinYear && month <= joinMonth) {
             prevBtn.disabled = true;
             prevBtn.classList.add('disabled');
@@ -1153,7 +1191,6 @@ function loadCalendar() {
     }
 
     if (nextBtn) {
-        // Can't go after current month
         if (year === currentYear && month >= currentMonth) {
             nextBtn.disabled = true;
             nextBtn.classList.add('disabled');
@@ -1163,53 +1200,44 @@ function loadCalendar() {
         }
     }
 
-    // Set month/year title
     const displayDate = new Date(year, month, 1);
     monthYear.innerText = displayDate.toLocaleString('default', { 
         month: 'long', 
         year: 'numeric' 
     });
 
-    // Clear previous days
     calendarDays.innerHTML = "";
 
-    // Get all practice dates
     const saved = JSON.parse(localStorage.getItem("doneDates")) || [];
 
-    // Add empty cells for days before month starts
     for (let i = 0; i < firstDay; i++) {
         const emptyDiv = document.createElement("div");
         emptyDiv.classList.add("empty-day");
         calendarDays.appendChild(emptyDiv);
     }
 
-    // Add all days of the month
     for (let day = 1; day <= totalDays; day++) {
         const div = document.createElement("div");
         div.classList.add("day");
         div.innerText = day;
 
-        // Mark today
         if (day === today.getDate() && 
             month === today.getMonth() && 
             year === today.getFullYear()) {
             div.classList.add("today");
         }
 
-        // Mark practiced days
         const dateString = `${year}-${month + 1}-${day}`;
         if (saved.includes(dateString)) {
             div.classList.add("done");
             div.innerHTML = `${day}<span class="tick">✓</span>`;
         }
 
-        // Mark future dates (dimmed)
         const dayDate = new Date(year, month, day);
         if (dayDate > today) {
             div.classList.add("future");
         }
 
-        // Mark before join date (dimmed)
         const joinDateOnly = new Date(joinYear, joinMonth, joinDate.getDate());
         if (dayDate < joinDateOnly) {
             div.classList.add("before-join");
@@ -1218,7 +1246,15 @@ function loadCalendar() {
         calendarDays.appendChild(div);
     }
 }
-
+// 🆕 Open login modal from calendar button
+function openLoginFromCalendar() {
+    const loginModal = document.getElementById('loginModal');
+    if (loginModal) {
+        loginModal.style.display = 'block';
+        document.body.classList.add('login-modal-open');
+    }
+}
+window.openLoginFromCalendar = openLoginFromCalendar;
 // Navigate months
 function changeMonth(direction) {
     const joinDate = getUserJoinDate();
@@ -1302,9 +1338,7 @@ function updateProfileUI(user) {
     const historyBtn = document.getElementById('historyBtn');
 
     if (user) {
-        // 👇 Add class to body when logged in
         document.body.classList.add('user-logged-in');
-        
         if (userInfo) userInfo.style.display = 'flex';
         if (loginBtn) loginBtn.style.display = 'none';
         if (logoutBtn) logoutBtn.style.display = 'block';
@@ -1319,16 +1353,18 @@ function updateProfileUI(user) {
 
         if (userEmail) userEmail.textContent = user.email;
     } else {
-        // 👇 Remove class when logged out
         document.body.classList.remove('user-logged-in');
-        
         if (userInfo) userInfo.style.display = 'none';
         if (loginBtn) loginBtn.style.display = 'block';
         if (logoutBtn) logoutBtn.style.display = 'none';
         if (historyBtn) historyBtn.style.display = 'none';
     }
-}
 
+    // 🆕 ADD THIS - Refresh calendar based on login state
+    if (typeof loadCalendar === 'function') {
+        loadCalendar();
+    }
+}
 // ============ PROFILE MODAL ============
 // ============ PROFILE MODAL ============
 function setupProfileModal() {
