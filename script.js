@@ -925,64 +925,94 @@ function markDone(checkbox, problemName, difficulty) {
 
 // ============ HISTORY ============
 let historyInterval;
+// ============ HISTORY (COOL VERSION) ============
 function openHistory() {
-    const modal = document.getElementById('historyModal');
-    const tbody = document.getElementById('historyTableBody');
-    tbody.innerHTML = ''; // Clear old data
+    if (!requireLogin("Practice History")) return;
 
-    // Get your history data (adjust based on your existing code)
-    const historyData = getHistoryData(); // Your existing function
+    const modal = document.getElementById('historyModal');
+    if (!modal) return;
+
+    // Load history data from localStorage
+    const history = JSON.parse(localStorage.getItem("practiceHistory")) || [];
 
     // Update stats
     let easyCount = 0, medCount = 0, hardCount = 0;
-    historyData.forEach(item => {
-        if (item.difficulty === 'Easy') easyCount++;
-        else if (item.difficulty === 'Medium') medCount++;
-        else if (item.difficulty === 'Hard') hardCount++;
+    history.forEach(item => {
+        const diff = (item.difficulty || '').toLowerCase();
+        if (diff === 'easy') easyCount++;
+        else if (diff === 'medium') medCount++;
+        else if (diff === 'hard') hardCount++;
     });
 
-    document.getElementById('histTotal').textContent = historyData.length;
-    document.getElementById('histEasy').textContent = easyCount;
-    document.getElementById('histMedium').textContent = medCount;
-    document.getElementById('histHard').textContent = hardCount;
+    const histTotal = document.getElementById('histTotal');
+    const histEasy = document.getElementById('histEasy');
+    const histMedium = document.getElementById('histMedium');
+    const histHard = document.getElementById('histHard');
+
+    if (histTotal) histTotal.textContent = history.length;
+    if (histEasy) histEasy.textContent = easyCount;
+    if (histMedium) histMedium.textContent = medCount;
+    if (histHard) histHard.textContent = hardCount;
 
     // Generate rows
-    if (historyData.length === 0) {
+    const tbody = document.getElementById('historyTableBody');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+
+    if (history.length === 0) {
         tbody.innerHTML = `
             <div class="history-empty">
                 <div class="history-empty-icon">📭</div>
-                <h3>No practice history yet</h3>
+                <h3 style="color:#fff; margin:10px 0;">No practice history yet</h3>
                 <p>Start solving problems to see your journey!</p>
             </div>
         `;
     } else {
-        historyData.forEach(item => {
+        history.forEach(item => {
             const row = document.createElement('div');
             row.className = 'history-row';
+            const diffLower = (item.difficulty || 'medium').toLowerCase();
             row.innerHTML = `
-                <span class="history-time">${item.timeAgo}</span>
-                <span class="history-problem">${item.problem}</span>
+                <span class="history-time">${getTimeAgo(item.time)}</span>
+                <span class="history-problem">${item.name}</span>
                 <div class="history-status">
                     <span class="status-badge">Accepted</span>
                 </div>
                 <div class="history-difficulty">
-                    <span class="diff-badge ${item.difficulty.toLowerCase()}">${item.difficulty}</span>
+                    <span class="diff-badge ${diffLower}">${item.difficulty || 'Medium'}</span>
                 </div>
             `;
             tbody.appendChild(row);
         });
     }
 
+    // Show modal
     modal.classList.add('active');
     modal.style.display = 'flex';
+
+    // Start auto-refresh for "X seconds ago" updates
+    if (historyInterval) clearInterval(historyInterval);
+    historyInterval = setInterval(() => {
+        if (modal.style.display === 'flex') {
+            const rows = tbody.querySelectorAll('.history-row .history-time');
+            rows.forEach((timeEl, idx) => {
+                if (history[idx]) {
+                    timeEl.textContent = getTimeAgo(history[idx].time);
+                }
+            });
+        }
+    }, 1000);
 }
+window.openHistory = openHistory;
 
 function closeHistory() {
     const modal = document.getElementById('historyModal');
+    if (!modal) return;
     modal.classList.remove('active');
     modal.style.display = 'none';
+    if (historyInterval) clearInterval(historyInterval);
 }
-
+window.closeHistory = closeHistory;
 function getTimeAgo(timestamp) {
     const seconds = Math.floor((new Date().getTime() - timestamp) / 1000);
     if (seconds < 60) return `${seconds} seconds ago`;
@@ -1005,23 +1035,16 @@ function getTimeAgo(timestamp) {
 }
 
 function loadHistory() {
-    let history = JSON.parse(localStorage.getItem("practiceHistory")) || [];
-    let tableBody = document.getElementById("historyTableBody");
-    if (!tableBody) return;
-
-    tableBody.innerHTML = "";
-    history.forEach(item => {
-        tableBody.innerHTML += `
-            <tr>
-                <td>${getTimeAgo(item.time)}</td>
-                <td>${item.name}</td>
-                <td>Accepted</td>
-                <td>${item.difficulty}</td>
-            </tr>
-        `;
-    });
+    // This just prepares data - actual rendering happens in openHistory()
+    // Keeping it for backward compatibility with your existing code
+    const history = JSON.parse(localStorage.getItem("practiceHistory")) || [];
+    // If modal is currently open, refresh it
+    const modal = document.getElementById('historyModal');
+    if (modal && modal.style.display === 'flex') {
+        openHistory();
+    }
 }
-
+window.loadHistory = loadHistory;
 
 
 // ============ DOM READY ============
