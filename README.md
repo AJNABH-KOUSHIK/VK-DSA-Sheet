@@ -66,7 +66,7 @@ But as a student, I wanted **ONE place** where I could:
 
 ## 🔗 Try it out
 
-👉 **[Click here to visit VK DSA Sheet](https://vk-dsa-sheet-vz9q.vercel.app/)**
+👉 **[Click here to visit VK DSA Sheet](https://vk-dsa-hub.netlify.app/)**
 
 ---
 
