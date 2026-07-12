@@ -1744,18 +1744,15 @@ const CURATED_CONTENT = {
         }
     ],
     links: [
-        { name: "Striver's A2Z DSA Sheet", url: "https://takeuforward.org/strivers-a2z-dsa-course/strivers-a2z-dsa-course-sheet-2/" },
-        { name: "NeetCode 150", url: "https://neetcode.io/practice" },
-        { name: "LeetCode", url: "https://leetcode.com/" },
-        { name: "GeeksforGeeks DSA", url: "https://www.geeksforgeeks.org/data-structures/" },
-        { name: "Codeforces", url: "https://codeforces.com/" }
+        { name: "DSA Patterns Visualization", url: "https://whimsical.com/dsa-patterns-47DQdVg8MiLZ1idPyveWFr" },
+        { name: "DSA Leetcode Patterns", url: "https://www.propeers.in/roadmaps/69692150442404dc257236a1?utm_source=instagram&utm_medium=influencer&utm_campaign=Srushti_Insta27thOctober&utm_referrer=sp_auto_dm&fbclid=PAT01DUATAEAhleHRuA2FlbQIxMABzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAafu9NjF7sTtgAPYl7inwR6rpRcI4IHjGboK5jyfuIWVEohPgw7tV45RszqEtg_aem_jqMThmS1aWA3cGxe72SENg" },
+        { name: "DSA Interview Questions", url: "https://docs.google.com/spreadsheets/d/1hXserPuxVoWMG9Hs7y8wVdRCJTcj3xMBAEYUOXQ5Xag/edit?gid=0#gid=0" },
     ],
     notes: [
-        { name: "Big-O Cheat Sheet", url: "https://www.bigocheatsheet.com/" },
-        { name: "DSA Patterns Guide", url: "https://seanprashad.com/leetcode-patterns/" }
+        { name: "DSA Handwritten Notes", url: "https://drive.google.com/file/d/1_xa9_aO5sAVGtTK5Sfet91-653kPWiwD/view?usp=sharing" },
+        { name: "DSA Online Notes", url: "https://drive.google.com/file/d/1JaMQ3BoXFVl6NHOYKzQ9ZqMylyuDkRxG/view?usp=sharing" }
     ]
 };
-
 // ============ SWITCH CONTENT TAB (Personal / Curated) ============
 function switchContentTab(button, feature, type) {
     // Update tab buttons
