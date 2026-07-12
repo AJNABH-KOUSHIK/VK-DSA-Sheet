@@ -1735,7 +1735,7 @@ const CURATED_CONTENT = {
             url: "https://mitpress.mit.edu/9780262046305/introduction-to-algorithms/"
         },
         {
-            name: "Cracking the Coding Interview",
+            name: "Coding Interview",
             url: "https://www.crackingthecodinginterview.com/"
         },
         {
