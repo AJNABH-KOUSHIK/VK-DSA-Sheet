@@ -66,10 +66,11 @@ But as a student, I wanted **ONE place** where I could:
 
 ## 📚 Project Resources
 
-👉 **[Click here to visit VK DSA Sheet](https://vk-dsa-hub.netlify.app/)**
-- 🚀 [Live Demo](https://vk-dsa-sheet-vz9q.vercel.app/)
-- 📑 [Project Presentation (PPT)](https://drive.google.com/file/d/1l881NFbKytH-swW125lTJVO0VVJgxDI6/view?usp=sharing)
-- 📄 [Project Report](https://drive.google.com/file/d/12F6brxTbDY5KjaNBh1KCdIVNKfVEX9Wd/view?usp=sharing)
+👉 **[🌐 Visit VK DSA Sheet](https://vk-dsa-hub.netlify.app/)**
+
+👉 **[📑 View Project Presentation (PPT)](https://drive.google.com/file/d/1l881NFbKytH-swW125lTJVO0VVJgxDI6/view?usp=sharing)**
+
+👉 **[📄 View Project Report](https://drive.google.com/file/d/12F6brxTbDY5KjaNBh1KCdIVNKfVEX9Wd/view?usp=sharing)**
 
 ---
 
