@@ -1750,7 +1750,8 @@ const CURATED_CONTENT = {
     ],
     notes: [
         { name: "DSA Handwritten Notes", url: "https://drive.google.com/file/d/1_xa9_aO5sAVGtTK5Sfet91-653kPWiwD/view?usp=sharing" },
-        { name: "DSA Online Notes", url: "https://drive.google.com/file/d/1JaMQ3BoXFVl6NHOYKzQ9ZqMylyuDkRxG/view?usp=sharing" }
+        { name: "DSA Online Notes", url: "https://drive.google.com/file/d/1JaMQ3BoXFVl6NHOYKzQ9ZqMylyuDkRxG/view?usp=sharing" },
+        { name: "SLIDING_WINDOW_AK", url: "https://drive.google.com/file/d/1ey3AHDcksi7sSfnV-CHycuQSEtT7pcoa/view?usp=sharing" }
     ]
 };
 // ============ SWITCH CONTENT TAB (Personal / Curated) ============
