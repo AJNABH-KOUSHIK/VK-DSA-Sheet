@@ -616,65 +616,41 @@ body.home-active #homeWidgets {
 }
 
 /* ============ MODAL ============ */
-/* ============ MODAL (WebView Safe) ============ */
-/* ============================================
-   ULTIMATE ANDROID WEBVIEW MODAL FIX
-   ============================================ */
-
-/* 1. Force the dark overlay to cover the whole screen using coordinates */
-/* ============================================
-   THE FINAL ANDROID MODAL FIX 
-   (Must be at the VERY BOTTOM of your CSS)
-   ============================================ */
-
-/* 1. Force the dark background to fill the screen */
 .modal {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    background-color: rgba(0, 0, 0, 0.85) !important;
-    z-index: 999998 !important;
+    display: none; 
+    position: fixed; 
+    z-index: 10000; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0, 0, 0, 0.75); 
+    backdrop-filter: blur(4px);
+
+    /* Flexbox properties to center the child card exactly */
+    align-items: center;
+    justify-content: center;
 }
 
-/* 2. Disconnect the box from margins/flexbox and lock it to the exact center of the screen */
-.modal-content, 
-#loginModal .modal-content, 
-#profileModal .modal-content {
-    position: fixed !important; /* Locks relative to the screen */
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important; /* Exactly centers it */
-    margin: 0 !important; /* Kills the bug pushing it to the top */
-    
-    width: 90vw !important;
-    max-width: 380px !important;
-    max-height: 85vh !important;
-    overflow-y: auto !important; /* Allows scrolling if keyboard is open */
-    z-index: 999999 !important;
-    
-    animation: centerPop 0.3s ease-out forwards !important;
+#profileModal[style*="display: block"],
+#loginModal[style*="display: block"] {
+    display: flex !important;
 }
 
-@keyframes centerPop {
-    from {
-        opacity: 0;
-        transform: translate(-50%, -48%) scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-    }
+.modal-content {
+    background: linear-gradient(145deg, #1b263b, #16203a);
+    margin: 60px auto;
+    padding: 30px;
+    border-radius: 20px;
+    width: 380px;
+    max-width: 90%;
+    color: white;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    transform: translateY(-20px);
+    animation: slideIn 0.4s forwards;
 }
 
-/* Safe animation for WebViews */
-@keyframes fadeInScale {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
-}
 .modal-header h2 {
     margin: 0 0 5px 0;
     font-size: 22px;
@@ -2714,13 +2690,12 @@ body:not(.user-logged-in) .problem input[type="checkbox"]:hover {
    ============================================ */
 
 @media (max-width: 768px) {
-    #profileModal .modal-content,
-    #loginModal .modal-content {
-        margin: auto !important;     /* Change from margin-top: 20px */
-        max-height: 85vh !important;
-        overflow-y: auto !important;
+    
+    /* 1. Make hamburger + buttons in ONE row at top */
+    .main {
+        padding-top: 70px !important;
+        position: relative;
     }
-}
 
     /* Position hamburger on top-left */
     .mobile-menu-btn {
@@ -4514,51 +4489,5 @@ body:not(.user-logged-in) .problem input[type="checkbox"]:hover {
 
     .hero-subtitle {
         font-size: 12px !important;
-    }
-}
-/* ============================================
-   ULTIMATE MODAL CENTERING FIX FOR ANDROID APP
-   ============================================ */
-
-/* 1. Ensure the dark overlay covers the whole screen */
-.modal {
-    position: fixed !important; 
-    z-index: 999999 !important; 
-    left: 0 !important;
-    top: 0 !important;
-    width: 100vw !important; 
-    height: 100vh !important; 
-}
-
-/* 2. Force the modal exactly in the middle of the screen */
-.modal-content, 
-#loginModal .modal-content,
-#profileModal .modal-content {
-    /* The absolute centering magic */
-    position: absolute !important;
-    top: 50% !important;
-    left: 50% !important;
-    margin: 0 !important; /* This kills the bug pushing it to the top */
-    transform: translate(-50%, -50%) !important;
-    
-    /* Ensure it fits on smaller screens and allows scrolling */
-    max-height: 85vh !important;
-    width: 90vw !important;
-    max-width: 380px !important;
-    overflow-y: auto !important;
-    
-    /* Fix animation so it doesn't break the centering */
-    animation: popCenter 0.3s ease-out forwards !important;
-}
-
-/* 3. New animation that respects the absolute center */
-@keyframes popCenter {
-    0% {
-        opacity: 0;
-        transform: translate(-50%, -45%) scale(0.95) !important;
-    }
-    100% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1) !important;
     }
 }
