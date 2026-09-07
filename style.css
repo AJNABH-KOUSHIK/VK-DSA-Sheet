@@ -617,42 +617,51 @@ body.home-active #homeWidgets {
 
 /* ============ MODAL ============ */
 /* ============ MODAL (WebView Safe) ============ */
+/* ============================================
+   ULTIMATE ANDROID WEBVIEW MODAL FIX
+   ============================================ */
+
+/* 1. Force the dark overlay to cover the whole screen using coordinates */
 .modal {
-    display: none; 
-    position: fixed !important; 
-    z-index: 999999 !important; 
-    left: 0 !important;
+    position: fixed !important;
     top: 0 !important;
-    width: 100vw !important; 
-    height: 100vh !important; 
-    background-color: rgba(5, 1, 15, 0.85) !important; 
-    
-    /* Flexbox centering that works reliably in Android WebView */
-    display: none;
+    bottom: 0 !important; /* Locks to bottom edge (fixes the height bug) */
+    left: 0 !important;
+    right: 0 !important;  /* Locks to right edge (fixes the width bug) */
+    background-color: rgba(0, 0, 0, 0.85) !important;
+}
+
+/* 2. When JS opens the modal, force Flexbox to center it */
+#loginModal[style*="display: block"], 
+#profileModal[style*="display: block"],
+.modal[style*="display: block"] {
+    display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    
-    overflow-y: auto !important; 
-    padding: 20px !important; 
-    box-sizing: border-box !important;
 }
 
-#profileModal[style*="display: block"],
-#loginModal[style*="display: block"] {
-    display: flex !important; /* Forces flex centering when JS opens it */
-}
-
-.modal-content {
-    background: linear-gradient(145deg, #1b263b, #16203a) !important;
-    margin: auto !important; /* Perfect centering */
-    padding: 30px !important;
-    border-radius: 20px !important;
-    width: 380px !important;
-    max-width: 90% !important;
-    color: white !important;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.9) !important;
-    box-sizing: border-box !important;
+/* 3. Strip away the margins causing the modal to hit the top of the screen */
+.modal-content, 
+#loginModal .modal-content, 
+#profileModal .modal-content {
     position: relative !important;
+    margin: 0 !important;         /* This fixes the push-to-top issue! */
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;   /* Removes any weird shifting */
+    
+    width: 90vw !important;
+    max-width: 380px !important;
+    max-height: 85vh !important;
+    overflow-y: auto !important;  /* Makes it scrollable if keyboard opens */
+    
+    animation: fadeInScale 0.3s ease forwards !important;
+}
+
+/* Safe animation for WebViews */
+@keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
 }
 .modal-header h2 {
     margin: 0 0 5px 0;
