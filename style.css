@@ -622,40 +622,52 @@ body.home-active #homeWidgets {
    ============================================ */
 
 /* 1. Force the dark overlay to cover the whole screen using coordinates */
+/* ============================================
+   THE FINAL ANDROID MODAL FIX 
+   (Must be at the VERY BOTTOM of your CSS)
+   ============================================ */
+
+/* 1. Force the dark background to fill the screen */
 .modal {
     position: fixed !important;
     top: 0 !important;
-    bottom: 0 !important; /* Locks to bottom edge (fixes the height bug) */
     left: 0 !important;
-    right: 0 !important;  /* Locks to right edge (fixes the width bug) */
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
     background-color: rgba(0, 0, 0, 0.85) !important;
+    z-index: 999998 !important;
 }
 
-/* 2. When JS opens the modal, force Flexbox to center it */
-#loginModal[style*="display: block"], 
-#profileModal[style*="display: block"],
-.modal[style*="display: block"] {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-}
-
-/* 3. Strip away the margins causing the modal to hit the top of the screen */
+/* 2. Disconnect the box from margins/flexbox and lock it to the exact center of the screen */
 .modal-content, 
 #loginModal .modal-content, 
 #profileModal .modal-content {
-    position: relative !important;
-    margin: 0 !important;         /* This fixes the push-to-top issue! */
-    top: auto !important;
-    left: auto !important;
-    transform: none !important;   /* Removes any weird shifting */
+    position: fixed !important; /* Locks relative to the screen */
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important; /* Exactly centers it */
+    margin: 0 !important; /* Kills the bug pushing it to the top */
     
     width: 90vw !important;
     max-width: 380px !important;
     max-height: 85vh !important;
-    overflow-y: auto !important;  /* Makes it scrollable if keyboard opens */
+    overflow-y: auto !important; /* Allows scrolling if keyboard is open */
+    z-index: 999999 !important;
     
-    animation: fadeInScale 0.3s ease forwards !important;
+    animation: centerPop 0.3s ease-out forwards !important;
+}
+
+@keyframes centerPop {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -48%) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
 }
 
 /* Safe animation for WebViews */
