@@ -7,7 +7,8 @@
     <link rel="manifest" href="/manifest.json">
 
 <meta name="theme-color" content="#05010f">
-
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="apple-touch-icon" href="/assets/icon-192.png">
     <title>VK DSA Patterns</title>
     <link rel="stylesheet" href="style.css">
@@ -9025,11 +9026,15 @@ onchange="markDone(this,'Minimum Window Sort','Medium')"></div>
     <script src="script.js" defer></script>
  
 <script>
-    if ("serviceWorker" in navigator) {
-        window.addEventListener("load", () => {
-            navigator.serviceWorker.register("/service-worker.js");
-        });
-    }
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/service-worker.js")
+            .then(() => console.log("Service Worker registered"))
+            .catch((error) =>
+                console.error("Service Worker registration failed:", error)
+            );
+    });
+}
 </script>
 
 </body>
