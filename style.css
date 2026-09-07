@@ -4490,3 +4490,49 @@ body:not(.user-logged-in) .problem input[type="checkbox"]:hover {
         font-size: 12px !important;
     }
 }
+/* ============================================
+   ULTIMATE MODAL CENTERING FIX FOR ANDROID APP
+   ============================================ */
+
+/* 1. Ensure the dark overlay covers the whole screen */
+.modal {
+    position: fixed !important; 
+    z-index: 999999 !important; 
+    left: 0 !important;
+    top: 0 !important;
+    width: 100vw !important; 
+    height: 100vh !important; 
+}
+
+/* 2. Force the modal exactly in the middle of the screen */
+.modal-content, 
+#loginModal .modal-content,
+#profileModal .modal-content {
+    /* The absolute centering magic */
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    margin: 0 !important; /* This kills the bug pushing it to the top */
+    transform: translate(-50%, -50%) !important;
+    
+    /* Ensure it fits on smaller screens and allows scrolling */
+    max-height: 85vh !important;
+    width: 90vw !important;
+    max-width: 380px !important;
+    overflow-y: auto !important;
+    
+    /* Fix animation so it doesn't break the centering */
+    animation: popCenter 0.3s ease-out forwards !important;
+}
+
+/* 3. New animation that respects the absolute center */
+@keyframes popCenter {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -45%) scale(0.95) !important;
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1) !important;
+    }
+}
